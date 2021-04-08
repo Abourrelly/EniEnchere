@@ -63,7 +63,7 @@ public class UserManager {
 				
 	}
 
-	public boolean connect(String input, String password) {
+	public int connect(String input, String password) {
 		// TODO Auto-generated method stub
 		try {
 			boolean choice_requete = false;
@@ -80,15 +80,15 @@ public class UserManager {
 				}
 				
 				//Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
-				boolean v = userDao.connect(input, password, choice_requete);
+				int id = userDao.connect(input, password, choice_requete);
 				
-				if(v == true) {
+				if(id != 0) {
 					// connexion en cours
-					return true;
+					return id;
 
 				} else {
 					// connexion refuser
-					return false;
+					return 0;
 					
 				}
 				
@@ -100,7 +100,26 @@ public class UserManager {
 			
 		}
 		
-		return false;
+		return 0;
 
 	}
+	
+	public Utilisateur get_infos_profile(int id) throws Exception {
+		
+		return userDao.get_infos_profile(id);
+		
+	}
+	
+	public void update_user(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe) throws Exception {
+		//TODO : gestion des erreurs
+		userDao.update_user(id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
+	
+	}
+	
+	public void delete_user(int id) throws Exception {
+		//TODO : gestion des erreurs
+		userDao.delete_user(id);
+	
+	}
+	
 }

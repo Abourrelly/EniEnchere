@@ -1,8 +1,5 @@
 package org.eni.projetEnchere.servlet;
 
-import org.eni.projetEnchere.bll.UserManager;
-import org.eni.projetEnchere.bo.Utilisateur;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -13,17 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eni.projetEnchere.bll.UserManager;
+import org.eni.projetEnchere.bo.Utilisateur;
+
 /**
- * Servlet implementation class ServletCreationCompte
+ * Servlet implementation class ServletsAfficherProfile
  */
-@WebServlet("/creation")
-public class ServletCreationCompte extends HttpServlet {
+@WebServlet("/ServletsAfficherProfile")
+public class ServletsAfficherProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCreationCompte() {
+    public ServletsAfficherProfile() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,48 +32,40 @@ public class ServletCreationCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/creationCompte.jsp");
-        rd.forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String pseudo = request.getParameter("pseudo");
-    	String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
-		String email = request.getParameter("email");
-		String telephone = request.getParameter("telephone");
-		String rue = request.getParameter("rue");
-		String code_postal = request.getParameter("code_postal");
-		String ville = request.getParameter("ville");
-		String mot_de_passe = request.getParameter("mot_de_passe");
+		// TODO Auto-generated method stub
+		// doGet(request, response);
 		
 		UserManager userManager = new UserManager();
 		
 		try {
-						
-			//Utilisateur user = 
-			userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
-		
+			
 			// recuperation de la session
 			HttpSession session = request.getSession();
 			
-			int connect = 0;
+			String id = (String)session.getAttribute("no_utilisateur");
 			
-			if(session.getAttribute("connect") == null) {
+			int id_int = Integer.parseInt(id);
+			
+			if(id_int != 0) {
 				
-				connect = 1;
+				Utilisateur user = userManager.get_infos_profile(id_int);
 				
-				session.setAttribute("connect", connect);
+				request.setAttribute("user", user);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/a_definir.jsp");
+		        rd.forward(request, response);
 			
-			}
+			}	
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
-	        rd.forward(request, response);
-		
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
