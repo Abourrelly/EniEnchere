@@ -35,7 +35,7 @@
                 <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Mot de passe :</label>
+                <label for="pass">Mot de passe :</label>
                 <input type="password" class="form-control" id="pass" placeholder="Renseignez votre mot de passe..." name="pass">
             </div>
             <div class="form-group">
