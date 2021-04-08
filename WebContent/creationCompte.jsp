@@ -25,5 +25,53 @@
         <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
     </nav>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
+                <h2 class="text-center">Mon profil</h2>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-5">
+                <form>
+                    <div class="form-group">
+                        <label for="pseudo">Pseudo</label>
+                        <input type="text" class="form-control" id="pseudo">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" class="form-control" id="prenom">
+                        <label for="telephone">Téléphone</label>
+                        <input type="text" class="form-control" id="telephone">
+                        <label for="cp">Code postal</label>
+                        <input type="text" class="form-control" id="cp">
+                        <label for="exampleInputPassword1">Mot de passe</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-5">
+                <form>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" id="nom">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="rue">Rue</label>
+                        <input type="text" class="form-control" id="rue">
+                        <label for="ville">Ville</label>
+                        <input type="text" class="form-control" id="ville">
+                        <label for="confirmEmail">Confirmation</label>
+                        <input type="email" class="form-control" id="confirmEmail" aria-describedby="emailHelp">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-3 text-right">
+                <button class="submit btn btn-info">Créer</button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 mt-3 text-left">
+                <a href="<%=request.getContextPath() %>/connexion" class="btn btn-info">Annuler</a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
