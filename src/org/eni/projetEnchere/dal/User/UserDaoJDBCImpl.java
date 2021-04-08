@@ -3,8 +3,6 @@
  */
 package org.eni.projetEnchere.dal.User;
 
-import projetenchere.dal.ConnectionProvider;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -13,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.eni.projetEnchere.bo.Utilisateur;
+import org.eni.projetEnchere.dal.ConnectionProvider;
 
 
 /**

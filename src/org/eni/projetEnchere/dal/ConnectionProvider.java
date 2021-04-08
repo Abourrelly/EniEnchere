@@ -1,4 +1,4 @@
-package projetenchere.dal;
+package org.eni.projetEnchere.dal;
 
 import java.sql.Connection;
 import java.sql.SQLException;
