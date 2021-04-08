@@ -39,11 +39,28 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Renseignez votre mot de passe...">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-info mt-2">Connexion</button>
-                <input class="form-check mt-2 ml-3" type="checkbox" value="" checked="">
-                Se souvenir de moi
+                <div class="form-group mt-5">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-check col-md-4">
+                                <button class="btn btn-info" type="submit">Connexion</button>
+                            </div>
+                        </div>
+                        <div class="form-check disabled col-md-4">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" value="" checked="">
+                                Se souvenir de moi
+                            </label>
+                            <div>
+                                <a href="#">Mot de passe oublié</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <a class="btn btn-info btn-lg" href="<%=request.getContextPath() %>/creation" role="button">Créer un compte</a>
+                </div>
             </div>
-
         </form>
     </div>
     <div class="col-lg-4"></div>
