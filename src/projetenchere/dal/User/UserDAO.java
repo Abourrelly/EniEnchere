@@ -35,4 +35,6 @@ public interface UserDAO {
 //	Le crédit initial est de 0
 //
 	public Utilisateur subscribe(Utilisateur newUser) throws Exception;
+
+	boolean check_unique_pseudo_and_email(String pseudo, String email);
 }
