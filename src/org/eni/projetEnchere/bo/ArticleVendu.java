@@ -1,4 +1,4 @@
-package projetenchere.bo;
+package org.eni.projetEnchere.bo;
 
 public class ArticleVendu {
 

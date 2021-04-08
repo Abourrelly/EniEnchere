@@ -1,9 +1,9 @@
 /**
  *
  */
-package projetenchere.dal.User;
+package org.eni.projetEnchere.dal.User;
 
-import projetenchere.bo.Utilisateur;
+import org.eni.projetEnchere.bo.Utilisateur;
 
 /**
  * @author var_dump
@@ -24,7 +24,7 @@ public interface UserDAO {
 //    private int credit;
 //    private int administrateur;
 //
-	public Utilisateur connect(String email, String mot_de_passe) throws Exception;
+	public boolean connect(String email, String mot_de_passe, boolean choice_requete) throws Exception;
 
 //
 //	En tant qu’utilisateur,
@@ -35,4 +35,6 @@ public interface UserDAO {
 //	Le crédit initial est de 0
 //
 	public Utilisateur subscribe(Utilisateur newUser) throws Exception;
+
+	boolean check_unique_pseudo_and_email(String pseudo, String email);
 }
