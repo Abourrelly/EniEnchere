@@ -1,9 +1,9 @@
 /**
  *
  */
-package projetenchere.dal.User;
+package org.eni.projetEnchere.dal.User;
 
-import projetenchere.bo.Utilisateur;
+import org.eni.projetEnchere.bo.Utilisateur;
 
 /**
  * @author var_dump
@@ -24,7 +24,7 @@ public interface UserDAO {
 //    private int credit;
 //    private int administrateur;
 //
-	public Utilisateur connect(String email, String mot_de_passe) throws Exception;
+	public boolean connect(String email, String mot_de_passe, boolean choice_requete) throws Exception;
 
 //
 //	En tant qu’utilisateur,

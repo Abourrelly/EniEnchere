@@ -1,7 +1,7 @@
 /**
  *
  */
-package projetenchere.dal.Article;
+package org.eni.projetEnchere.dal.Article;
 
 /**
  * @author var_dump

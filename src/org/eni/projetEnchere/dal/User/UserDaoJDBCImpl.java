@@ -1,9 +1,8 @@
 /**
  *
  */
-package projetenchere.dal.User;
+package org.eni.projetEnchere.dal.User;
 
-import projetenchere.bo.Utilisateur;
 import projetenchere.dal.ConnectionProvider;
 
 import java.nio.charset.StandardCharsets;
@@ -12,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.eni.projetEnchere.bo.Utilisateur;
 
 
 /**

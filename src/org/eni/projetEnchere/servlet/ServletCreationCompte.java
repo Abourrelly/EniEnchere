@@ -1,4 +1,4 @@
-package projetenchere.servlet;
+package org.eni.projetEnchere.servlet;
 
 import java.io.IOException;
 

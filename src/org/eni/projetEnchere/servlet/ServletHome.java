@@ -1,4 +1,4 @@
-package projetenchere.servlet;
+package org.eni.projetEnchere.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import projetenchere.bo.Utilisateur;
-import projetenchere.dal.User.DAOFactory;
-import projetenchere.dal.User.UserDAO;
+import org.eni.projetEnchere.bo.Utilisateur;
+import org.eni.projetEnchere.dal.User.DAOFactory;
+import org.eni.projetEnchere.dal.User.UserDAO;
 
 /**
  * Servlet implementation class ServletHome
