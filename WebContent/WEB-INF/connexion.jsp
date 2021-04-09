@@ -29,14 +29,14 @@
 <div class="row ml-5 mt-5">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
-        <form>
+        <form action="connexion" method="POST">
             <div class="form-group">
-                <label for="exampleInputEmail1">Identifiant :</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Renseignez votre identifiant...">
+                <label for="identifiant">Identifiant :</label>
+                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Mot de passe :</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Renseignez votre mot de passe...">
+                <label for="pass">Mot de passe :</label>
+                <input type="password" class="form-control" id="pass" placeholder="Renseignez votre mot de passe..." name="pass">
             </div>
             <div class="form-group">
                 <div class="form-group mt-5">
