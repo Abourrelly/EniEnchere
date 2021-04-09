@@ -5,11 +5,15 @@ package org.eni.projetEnchere.bll;
 
 import org.eni.projetEnchere.dal.Article.DAOFactory;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.eni.projetEnchere.bo.ArticleVendu;
+import org.eni.projetEnchere.bo.Categorie;
+import org.eni.projetEnchere.bo.Enchere;
 import org.eni.projetEnchere.bo.Utilisateur;
 import org.eni.projetEnchere.dal.Article.ArticleDAO;
 
@@ -51,10 +55,9 @@ public class ArticleManager {
 		
 	}
 	
-	
-	public List<ArticleVendu> get_all_article() throws Exception {
+	public List<ArticleVendu> get_all_article_user_disconnect() throws Exception {
 		
-		listeArticleVendu.addAll(articleDao.get_all_article());
+		listeArticleVendu.addAll(articleDao.get_all_article_user_disconnect());
 		return listeArticleVendu;
 		
 //		En tant qu’utilisateur non connecté, 
@@ -62,6 +65,48 @@ public class ArticleManager {
 //		Je peux filtrer ma recherche par catégorie, et par nom d’article (l’article est affiché si il contient le critère saisi)
 		
 		
+	}
+	
+	
+	public List<ArticleVendu> get_all_article_user_connect(int id) throws Exception {
+		
+		listeArticleVendu.addAll(articleDao.get_all_article_user_connect(id));
+		return listeArticleVendu;
+		
+	}
+	
+	public void send_payement(int id_user, int id_article, int mise_a_prit, int meilleur_offre, int reliquat, int proposition) throws Exception{
+
+		if(reliquat >= proposition) {
+			// le reliquat est superieur ou egale a la propistion faite pour encherire
+			
+			if(proposition >= mise_a_prit) {
+				// si la proposition est superieur ou egale a la mise a prit 
+				
+				if(proposition > meilleur_offre) {
+					// la propostion est superieur a la meilleur offre et la meilleur offre 
+					
+					Utilisateur user = new Utilisateur(); 
+					user.setNo_utilisateur(id_user);
+					
+					ArticleVendu article= new ArticleVendu(); 
+					article.setNo_article(id_article);
+					
+					LocalDate now = LocalDate.now();
+			
+					Enchere enchere = new Enchere(now, proposition);
+					
+					articleDao.send_payement(user, article, enchere);
+					
+				}
+
+			}
+			
+		} else {
+			// pas assez de monaie pour encherire
+			
+		}
+
 	}
 	
 }
