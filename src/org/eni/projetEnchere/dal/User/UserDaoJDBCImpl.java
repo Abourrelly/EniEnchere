@@ -80,17 +80,6 @@ public class UserDaoJDBCImpl implements UserDAO {
 					String password_in_db = rs.getString("mot_de_passe");
 					
 					String password_encrypt = encrypt_password(password);
-					
-//					pStmtUser.setString(9, password);
-					
-//					MessageDigest msg = MessageDigest.getInstance("SHA-256");
-//			        byte[] hash = msg.digest(password.getBytes(StandardCharsets.UTF_8));
-//			        // convertir bytes en hexadécimal
-//			        StringBuilder s = new StringBuilder();
-//			        for (byte b : hash) {
-//			            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-//			        }
-//			        String singleString = s.toString();
 			        
 			        if(password_encrypt.equals(password_in_db)) {
 			        	// password correct
@@ -147,18 +136,6 @@ public class UserDaoJDBCImpl implements UserDAO {
 			
 			pStmtUser.setString(9, password);
 			
-//			String mdp = newUser.getMot_de_passe();
-//
-//	        MessageDigest msg = MessageDigest.getInstance("SHA-256");
-//	        byte[] hash = msg.digest(mdp.getBytes(StandardCharsets.UTF_8));
-//	        // convertir bytes en hexadécimal
-//	        StringBuilder s = new StringBuilder();
-//	        for (byte b : hash) {
-//	            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-//	            
-//	        }
-//	        String singleString = s.toString();
-//	        pStmtUser.setString(9, singleString);
 	        pStmtUser.setInt(10, 0);
 	        pStmtUser.setInt(11, 0);
 			

@@ -1,5 +1,7 @@
 package org.eni.projetEnchere.bo;
 
+import java.util.Date;
+
 public class ArticleVendu {
 
     private int no_article;
@@ -24,7 +26,7 @@ public class ArticleVendu {
         this.prix_vente = prix_vente;
     }
 
-    public int getNo_article() {
+	public int getNo_article() {
         return no_article;
     }
 
