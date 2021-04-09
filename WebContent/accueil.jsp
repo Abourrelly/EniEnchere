@@ -16,12 +16,15 @@
     <title>Eni-Enchères - Accueil</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="ressource/css/accueil.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="ressource/JS/accueil.js"></script>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <a class="navbar-brand" href="#">Eni-Enchères</a>
@@ -82,28 +85,28 @@
                 <button type="button" class="btn btn-info btn-lg btn-block">Rechercher</button>
             </div>
         </div>
-        <div class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
+        <div  id ="searchElement" class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
             <div class="col-sm-6">
                 <fieldset class="form-group">
                     <label class="form-check-label mb-2">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="" onchange="swapCheckbox(this)">
                         Achats
                     </label>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
                             Enchères ouvertes
                         </label>
                     </div>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
                             Mes enchères en cours
                         </label>
                     </div>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
                             Mes enchères remportées
                         </label>
                     </div>
@@ -112,24 +115,24 @@
             <div class="col-sm-6">
                 <fieldset class="form-group">
                     <label class="form-check-label mb-2">
-                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onchange="swapCheckbox(this)">
                         Ventes
                     </label>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
                             Enchères ouvertes
                         </label>
                     </div>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
                             Mes enchères en cours
                         </label>
                     </div>
                     <div class="form-check ml-3">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked="">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
                             Mes enchères remportées
                         </label>
                     </div>
