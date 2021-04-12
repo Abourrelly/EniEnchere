@@ -1,5 +1,8 @@
 package org.eni.projetEnchere.servlet;
 
+import org.eni.projetEnchere.bll.UserManager;
+import org.eni.projetEnchere.bo.Utilisateur;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -8,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ServletCreationCompte
@@ -36,7 +40,45 @@ public class ServletCreationCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		String pseudo = request.getParameter("pseudo");
+    	String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String code_postal = request.getParameter("code_postal");
+		String ville = request.getParameter("ville");
+		String mot_de_passe = request.getParameter("mot_de_passe");
+		
+		UserManager userManager = new UserManager();
+		
+		try {
+						
+			//Utilisateur user = 
+			userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
+		
+			// recuperation de la session
+			HttpSession session = request.getSession();
+			
+			int connect = 0;
+			
+			if(session.getAttribute("connect") == null) {
+				
+				connect = 1;
+				
+				session.setAttribute("connect", connect);
+			
+			}
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+	        rd.forward(request, response);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
