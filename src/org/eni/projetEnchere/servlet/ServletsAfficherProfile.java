@@ -56,7 +56,7 @@ public class ServletsAfficherProfile extends HttpServlet {
 			
 			if(id_int != 0) {
 				
-				Utilisateur user = userManager.get_infos_profile(id_int);
+				Utilisateur user = userManager.getInfosProfile(id_int);
 				
 				request.setAttribute("user", user);
 				

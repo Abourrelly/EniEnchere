@@ -18,7 +18,7 @@ public class UserManager {
 		userDao = DAOFactory.getUserDAO();
 	}
 	
-	public Utilisateur subscribe(String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe, int credit, int administrateur) {
+	public Utilisateur subscribe(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, int administrateur) {
 		// TODO Auto-generated method stub
 //			  private String pseudo;
 //			  private String nom;
@@ -34,7 +34,7 @@ public class UserManager {
 
 		try {
 
-			boolean v = userDao.check_unique_pseudo_and_email(pseudo, email);
+			boolean v = userDao.checkUniquePseudoAndEmail(pseudo, email);
 			
 			//System.out.println(v);
 			// si v la valeur de retours est true donc il n'y a pas de resultat en base
@@ -43,7 +43,7 @@ public class UserManager {
 				// si le pseudo n'est pas null et que c'est caractere soit tous alphanumerique
 				if(pseudo != null && pseudo.matches("\\p{Alpha}+")){ // "\\p{Alpha}+"  // "\\p{Alnum}"
 					
-					Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
+					Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, 0);
 					userDao.subscribe(user);
 					
 				}
@@ -66,21 +66,21 @@ public class UserManager {
 	public int connect(String input, String password) {
 		// TODO Auto-generated method stub
 		try {
-			boolean choice_requete = false;
+			boolean choiceRequete = false;
 			// si le pseudo n'est pas null et que c'est caractere soit tous alphanumerique
 			if(input != null){ // "\\p{Alpha}+"  // "\\p{Alnum}"
 				
 				if(input.contains("@")) {
 					// requete par adresse mail
-					choice_requete = true;
+					choiceRequete = true;
 					
 				} else {
 					// requete par pseudo
-					choice_requete = false;
+					choiceRequete = false;
 				}
 				
 				//Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
-				int id = userDao.connect(input, password, choice_requete);
+				int id = userDao.connect(input, password, choiceRequete);
 				
 				if(id != 0) {
 					// connexion en cours
@@ -104,21 +104,21 @@ public class UserManager {
 
 	}
 	
-	public Utilisateur get_infos_profile(int id) throws Exception {
+	public Utilisateur getInfosProfile(int id) throws Exception {
 		
-		return userDao.get_infos_profile(id);
+		return userDao.getInfosProfile(id);
 		
 	}
 	
-	public void update_user(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe) throws Exception {
+	public void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception {
 		//TODO : gestion des erreurs
-		userDao.update_user(id, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
+		userDao.updateUser(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 	
 	}
 	
-	public void delete_user(int id) throws Exception {
+	public void deleteUser(int id) throws Exception {
 		//TODO : gestion des erreurs
-		userDao.delete_user(id);
+		userDao.deleteUser(id);
 	
 	}
 	

@@ -31,7 +31,7 @@ public class ArticleManager {
 		articleDao = DAOFactory.getArticleDAO();
 	}
 	
-	public ArticleVendu sale_artilce(int id, String nom_article, String description, String date_debut_encheres, String date_fin_encheres, int prix_initial, int prix_vente, int id_categorie) throws Exception {
+	public ArticleVendu saleArtilce(int id, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, int idCategorie) throws Exception {
 		
 //		En tant qu’utilisateur, 
 //		je peux vendre un article sur la plateforme ENI-Enchères. 
@@ -49,15 +49,19 @@ public class ArticleManager {
 		
 		    
 		
-		ArticleVendu article = new ArticleVendu(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
+		ArticleVendu article = new ArticleVendu(nom, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente);
 
-		return articleDao.sale_article(id, article, id_categorie);
+		UserManager userManager = new UserManager();
+		
+		Utilisateur user = userManager.getInfosProfile(id);
+		
+		return articleDao.saleArticle(user, article, idCategorie);
 		
 	}
 	
-	public List<ArticleVendu> get_all_article_user_disconnect() throws Exception {
+	public List<ArticleVendu> getAllArticleUserDisconnect() throws Exception {
 		
-		listeArticleVendu.addAll(articleDao.get_all_article_user_disconnect());
+		listeArticleVendu.addAll(articleDao.getAllArticleUserDisconnect());
 		return listeArticleVendu;
 		
 //		En tant qu’utilisateur non connecté, 
@@ -68,35 +72,32 @@ public class ArticleManager {
 	}
 	
 	
-	public List<ArticleVendu> get_all_article_user_connect(int id) throws Exception {
+	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception {
 		
-		listeArticleVendu.addAll(articleDao.get_all_article_user_connect(id));
+		listeArticleVendu.addAll(articleDao.getAllArticleUserConnect(id));
 		return listeArticleVendu;
 		
 	}
 	
-	public void send_payement(int id_user, int id_article, int mise_a_prit, int meilleur_offre, int reliquat, int proposition) throws Exception{
-
-		if(reliquat >= proposition) {
+	public void sendPayement(Utilisateur user, int idArticle, int miseAPrit, int meilleurOffre, int proposition) throws Exception{
+		
+		if(user.getCredit() >= proposition) {
 			// le reliquat est superieur ou egale a la propistion faite pour encherire
 			
-			if(proposition >= mise_a_prit) {
+			if(proposition >= miseAPrit) {
 				// si la proposition est superieur ou egale a la mise a prit 
 				
-				if(proposition > meilleur_offre) {
+				if(proposition > meilleurOffre) {
 					// la propostion est superieur a la meilleur offre et la meilleur offre 
 					
-					Utilisateur user = new Utilisateur(); 
-					user.setNo_utilisateur(id_user);
-					
 					ArticleVendu article= new ArticleVendu(); 
-					article.setNo_article(id_article);
+					article.setIdArticle(idArticle);
 					
 					LocalDate now = LocalDate.now();
 			
 					Enchere enchere = new Enchere(now, proposition);
 					
-					articleDao.send_payement(user, article, enchere);
+					articleDao.sendPayement(user, article, enchere);
 					
 				}
 

@@ -27,10 +27,16 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		
 	private static final String INSERT_ARTILCE = "INSERT INTO ENCHERE_GRP1.ARTICLES_VENDUS(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur ,no_categorie) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
+	private static final String INSERT_RETRAIT = "INSERT INTO ENCHERE_GRP1.RETRAITS(no_article, rue, code_postal, ville) VALUES(?, ?, ?, ?)";
+
+	
 	private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE date_debut_encheres >= ? AND date_fin_encheres <= ?";
 
 	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";                            
 
+	//private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS INNER JOIN ENCHERE_GRP1.ENCHERES ON ENCHERE_GRP1.ARTICLES_VENDUS.no_article = ENCHERE_GRP1.ENCHERES.no_article AND ENCHERE_GRP1.ARTICLES_VENDUS.no_utilisateur = ENCHERE_GRP1.ENCHERES.no_utilisateur WHERE no_utilisateur = ?";                            
+
+	
 //	date_debut_encheres <= ? AND date_fin_encheres >= ?
 //	private static final String SELECT_ALL_ARTICLE_USER_CONNECT_OPTION_MES_VENTES= "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";
 //
@@ -47,26 +53,39 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	private static final String UPDATE_FIRST_USER_BEST_MONTANT = "UPDATE ENCHERE_GRP1.UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
 	
 	@Override
-	public ArticleVendu sale_article(int id, ArticleVendu article, int id_categorie) throws Exception {
+	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
 			PreparedStatement pStmtArtilce = cnx.prepareStatement(INSERT_ARTILCE, PreparedStatement.RETURN_GENERATED_KEYS);
-			pStmtArtilce.setString(1, article.getNom_article());
+			pStmtArtilce.setString(1, article.getNom());
 			pStmtArtilce.setString(2, article.getDescription());
-			pStmtArtilce.setDate(3, java.sql.Date.valueOf(article.getDate_debut_encheres()));
-			pStmtArtilce.setDate(4, java.sql.Date.valueOf(article.getDate_fin_encheres()));
-			pStmtArtilce.setInt(5, article.getPrix_initial());
-			pStmtArtilce.setInt(6, article.getPrix_vente());
-			pStmtArtilce.setInt(7, id);
-			pStmtArtilce.setInt(8, id_categorie);
+			pStmtArtilce.setDate(3, java.sql.Date.valueOf(article.getDateDebutEncheres()));
+			pStmtArtilce.setDate(4, java.sql.Date.valueOf(article.getDateFinEncheres()));
+			pStmtArtilce.setInt(5, article.getPrixInitial());
+			pStmtArtilce.setInt(6, article.getPrixVente());
+			pStmtArtilce.setInt(7, user.getId());
+			pStmtArtilce.setInt(8, idCategorie);
 			
 			pStmtArtilce.executeUpdate();
 			
 			ResultSet rsArtilce = pStmtArtilce.getGeneratedKeys();
 			if(rsArtilce.next()) {
-				article.setNo_article(rsArtilce.getInt(1));
+				article.setIdArticle(rsArtilce.getInt(1));
+			}
+			
+			PreparedStatement pStmtRetrait= cnx.prepareStatement(INSERT_RETRAIT, PreparedStatement.RETURN_GENERATED_KEYS);
+			pStmtRetrait.setInt(1, article.getIdArticle());
+			pStmtRetrait.setString(2, user.getRue());
+			pStmtRetrait.setString(3, user.getCodePostal());
+			pStmtRetrait.setString(4, user.getVille());
+			
+			pStmtRetrait.executeUpdate();
+			
+			ResultSet rsRetrait = pStmtRetrait.getGeneratedKeys();
+			if(rsRetrait.next()) {
+				
 			}
 			
 		} catch (SQLException e) {
@@ -79,10 +98,10 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 
 	@Override
-	public List<ArticleVendu> get_all_article_user_connect(int id) throws Exception{
+	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception{
 		// TODO Auto-generated method stub
 		
-		String now_format_string = now_date();
+		String nowFormatString = nowDate();
 				
 		List<ArticleVendu> result = new ArrayList<ArticleVendu>();
 		
@@ -95,14 +114,14 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			
 			while(rs.next()) {
 				ArticleVendu articleVendu = new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), rs.getString("date_debut_encheres"), rs.getString("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
-				articleVendu.setNo_article(rs.getInt("no_article"));
+				articleVendu.setIdArticle(rs.getInt("no_article"));
 				Utilisateur user = new Utilisateur(); 
-				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
-				articleVendu.setNo_utilisateur(user);
+				user.setId(rs.getInt("no_utilisateur"));
+				articleVendu.setIdUser(user);
 				
 				Categorie categorie = new Categorie(); 
-				categorie.setNo_categorie(rs.getInt("no_categorie"));
-				articleVendu.setNo_categorie(categorie);
+				categorie.setIdCategorie(rs.getInt("no_categorie"));
+				articleVendu.setIdCategorie(categorie);
 				
 				result.add(articleVendu);
 			
@@ -117,9 +136,9 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	
 
 	@Override
-	public List<ArticleVendu> get_all_article_user_disconnect() throws Exception {
+	public List<ArticleVendu> getAllArticleUserDisconnect() throws Exception {
 		// TODO Auto-generated method stub
-		String now_format_string = now_date();
+		String nowFormatString = nowDate();
 		
 		List<ArticleVendu> result = new ArrayList<ArticleVendu>();
 		
@@ -127,20 +146,20 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			
 			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_ARTICLE_USER_DISCONNECT);
 			
-			pStmt.setDate(1, java.sql.Date.valueOf(now_format_string));
-			pStmt.setDate(2, java.sql.Date.valueOf(now_format_string));
+			pStmt.setDate(1, java.sql.Date.valueOf(nowFormatString));
+			pStmt.setDate(2, java.sql.Date.valueOf(nowFormatString));
 			
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
 				ArticleVendu articleVendu = new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), rs.getString("date_debut_encheres"), rs.getString("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
-				articleVendu.setNo_article(rs.getInt("no_article"));
+				articleVendu.setIdArticle(rs.getInt("no_article"));
 				Utilisateur user = new Utilisateur(); 
-				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
-				articleVendu.setNo_utilisateur(user);
+				user.setId(rs.getInt("no_utilisateur"));
+				articleVendu.setIdUser(user);
 				
 				Categorie categorie = new Categorie(); 
-				categorie.setNo_categorie(rs.getInt("no_categorie"));
-				articleVendu.setNo_categorie(categorie);
+				categorie.setIdCategorie(rs.getInt("no_categorie"));
+				articleVendu.setIdCategorie(categorie);
 				
 				result.add(articleVendu);
 			
@@ -154,8 +173,17 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	}
 	
 	@Override
-	public ArticleVendu send_payement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception{
-
+	public ArticleVendu sendPayement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception{
+		
+		
+//		En tant qu’utilisateur, 
+//		je peux faire une enchère sur un article si je propose un prix (en points) supérieur au tarif actuel 
+//		et si mon compte de points ne devient pas négatif. 
+//		Si l’enchère est possible, 
+//		mon crédit de points est débité du montant proposé. 
+//		Le meilleur enchérisseur précédent si il existe est re-crédité de son offre.
+		
+		
 //		mon crédit de points est débité du montant proposé. 
 //		
 //		Le meilleur enchérisseur précédent si il existe est re-crédité de son offre.
@@ -164,21 +192,28 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
-			int best_montant = enchere.getMontant_enchere();
-			int credit = user.getCredit();
+			int totale = 0;
 			
-			int totale = credit - best_montant;
+			int bestMontant = enchere.getMontantEnchere();
+			System.out.println(bestMontant);
+			
+			int credit = user.getCredit();
+			System.out.println(credit);
+			
+			totale = credit - bestMontant;
+			
+			System.out.println(totale);
 			
 			PreparedStatement pStmtBestMontant= cnx.prepareStatement(UPDATE_FIRST_USER_BEST_MONTANT);
 			pStmtBestMontant.setInt(1, totale);
-			pStmtBestMontant.setInt(2, user.getNo_utilisateur());
+			pStmtBestMontant.setInt(2, user.getId());
 			pStmtBestMontant.executeUpdate();
 			
 			PreparedStatement pStmtEnchere = cnx.prepareStatement(INSERT_ENCHERE, PreparedStatement.RETURN_GENERATED_KEYS);
-			pStmtEnchere.setInt(1, user.getNo_utilisateur());
-			pStmtEnchere.setInt(2, article.getNo_article());
-			pStmtEnchere.setDate(3, java.sql.Date.valueOf(enchere.getDate_enchere()));
-			pStmtEnchere.setInt(4, enchere.getMontant_enchere());
+			pStmtEnchere.setInt(1, user.getId());
+			pStmtEnchere.setInt(2, article.getIdArticle());
+			pStmtEnchere.setDate(3, java.sql.Date.valueOf(enchere.getDateEnchere()));
+			pStmtEnchere.setInt(4, enchere.getMontantEnchere());
 			
 			pStmtEnchere.executeUpdate();
 			
@@ -190,26 +225,30 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			
 			PreparedStatement pStmtSelectEnchere = cnx.prepareStatement(SELECT_LAST_USER_BEST_ENCHERE);
 			
-			//pStmtSelectEnchere.setInt(1, user.getNo_utilisateur());
-			pStmtSelectEnchere.setInt(1, best_montant);
-			pStmtSelectEnchere.setInt(2, article.getNo_article());
+			pStmtSelectEnchere.setInt(1, bestMontant);
+			pStmtSelectEnchere.setInt(2, article.getIdArticle());
 			
 			ResultSet rsSelectEnchere = pStmtSelectEnchere.executeQuery();
 			
-			int id_last_user = 0;
-			int montant_enchere = 0;
+			int idLastUser = 0;
+			int montantEnchere = 0;
 			
 			while(rsSelectEnchere.next()) {
-				id_last_user = rsSelectEnchere.getInt("no_utilisateur");
-				montant_enchere = rsSelectEnchere.getInt("montant_enchere");
+				idLastUser = rsSelectEnchere.getInt("no_utilisateur");
+				
+				System.out.println(idLastUser);
+				
+				montantEnchere = rsSelectEnchere.getInt("montant_enchere");
+				
+				System.out.println(montantEnchere);
 			}
 //			
-			PreparedStatement pStmtUpdateCreditUser = cnx.prepareStatement(UPDATE_LAST_USER_BEST_ENCHERE);
-			
-			pStmtUpdateCreditUser.setInt(1, montant_enchere);
-			pStmtUpdateCreditUser.setInt(2, user.getNo_utilisateur());
-			
-			ResultSet rsUpdateCreditUser = pStmtUpdateCreditUser.executeQuery();			
+//			PreparedStatement pStmtUpdateCreditUser = cnx.prepareStatement(UPDATE_LAST_USER_BEST_ENCHERE);
+//			
+//			pStmtUpdateCreditUser.setInt(1, montantEnchere);
+//			pStmtUpdateCreditUser.setInt(2, user.getId());
+//			
+//			ResultSet rsUpdateCreditUser = pStmtUpdateCreditUser.executeQuery();
 						
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -218,7 +257,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		return null;
 	}
 	
-	private String now_date() {
+	private String nowDate() {
 		
 		Date now = new Date();
 		
@@ -226,9 +265,9 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		
 		formater = new SimpleDateFormat("yyyy-MM-dd");
 		
-		String now_format_string = formater.format(now);
+		String nowFormatString = formater.format(now);
 		
-		return now_format_string;
+		return nowFormatString;
 	}
 
 

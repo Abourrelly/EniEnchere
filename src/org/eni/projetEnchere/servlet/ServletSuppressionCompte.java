@@ -48,7 +48,7 @@ public class ServletSuppressionCompte extends HttpServlet {
 			
 				request.getSession().invalidate();
 			
-				userManager.delete_user(id_int);
+				userManager.deleteUser(id_int);
 				
 			}
 			

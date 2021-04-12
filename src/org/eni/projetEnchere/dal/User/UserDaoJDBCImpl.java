@@ -42,7 +42,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	
 	private static final String INSERT_USER = "INSERT INTO ENCHERE_GRP1.UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	private static final String SELECT_BY_ID = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
 
 	private static final String UPDATE_USER = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 
@@ -50,12 +50,12 @@ public class UserDaoJDBCImpl implements UserDAO {
 	
 	
 	@Override
-	public int connect(String input, String password, boolean choice_requete) throws Exception {
+	public int connect(String input, String password, boolean choiceRequete) throws Exception {
 		// TODO Auto-generated method stub
 		
 		String requete = null;
 		
-		if (choice_requete == true) {
+		if (choiceRequete == true) {
 		    // si c'est un email
 			requete = GET_USER_FOR_EMAIL;
 			
@@ -77,11 +77,11 @@ public class UserDaoJDBCImpl implements UserDAO {
 				
 				if (rs.next()) {
 					// resultat pas vide
-					String password_in_db = rs.getString("mot_de_passe");
+					String passwordInDb = rs.getString("mot_de_passe");
 					
-					String password_encrypt = encrypt_password(password);
+					String passwordEncrypt = encryptPassword(password);
 			        
-			        if(password_encrypt.equals(password_in_db)) {
+			        if(passwordEncrypt.equals(passwordInDb)) {
 			        	// password correct
 			        	int id = rs.getInt("id");
 			        	return id;
@@ -129,10 +129,10 @@ public class UserDaoJDBCImpl implements UserDAO {
 			pStmtUser.setString(4, newUser.getEmail());
 			pStmtUser.setString(5, newUser.getTelephone());
 			pStmtUser.setString(6, newUser.getRue());
-			pStmtUser.setString(7, newUser.getCode_postal());
+			pStmtUser.setString(7, newUser.getCodePostal());
 			pStmtUser.setString(8, newUser.getVille());
 			
-			String password = encrypt_password(newUser.getMot_de_passe());
+			String password = encryptPassword(newUser.getMotDePasse());
 			
 			pStmtUser.setString(9, password);
 			
@@ -143,7 +143,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 			
 			ResultSet rsUser = pStmtUser.getGeneratedKeys();
 			if(rsUser.next()) {
-				newUser.setNo_utilisateur(rsUser.getInt(1));
+				newUser.setId(rsUser.getInt(1));
 			}
 			
 		} catch (SQLException e) {
@@ -154,7 +154,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean check_unique_pseudo_and_email(String pseudo, String email) {
+	public boolean checkUniquePseudoAndEmail(String pseudo, String email) {
 		// TODO Auto-generated method stub
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
@@ -181,7 +181,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 
 	@Override
-	public Utilisateur get_infos_profile(int id) throws Exception {
+	public Utilisateur getInfosProfile(int id) throws Exception {
 		// TODO Auto-generated method stub
 		
 		Utilisateur user = null;
@@ -208,7 +208,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 	
 	@Override
-	public void update_user(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe) throws Exception {
+	public void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception {
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
@@ -220,10 +220,10 @@ public class UserDaoJDBCImpl implements UserDAO {
 			pStmtUser.setString(4, email);
 			pStmtUser.setString(5, telephone);
 			pStmtUser.setString(6, rue);
-			pStmtUser.setString(7, code_postal);
+			pStmtUser.setString(7, codePostal);
 			pStmtUser.setString(8, ville);
 			
-			String password = encrypt_password(mot_de_passe);
+			String password = encryptPassword(motDePasse);
 			
 			pStmtUser.setString(9, password);
 			pStmtUser.setInt(10, id);
@@ -237,7 +237,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 	
 	@Override
-	public void delete_user(int id) {
+	public void deleteUser(int id) {
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
@@ -252,7 +252,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 		
 	}
 	
-	private String encrypt_password(String password) throws Exception {
+	private String encryptPassword(String password) throws Exception {
 		
 		MessageDigest msg = MessageDigest.getInstance("SHA-256");
         byte[] hash = msg.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -269,20 +269,21 @@ public class UserDaoJDBCImpl implements UserDAO {
 	
 	private Utilisateur mapUser(ResultSet rs) throws SQLException {
 				
+		int idUser = rs.getInt("no_utilisateur");
 		String pseudo = rs.getString("pseudo");
 		String nom = rs.getString("nom");
 		String prenom = rs.getString("prenom");
 		String email = rs.getString("email");
 		String telephone = rs.getString("telephone");
 		String rue = rs.getString("rue");
-		String code_postal = rs.getString("code_postal");
+		String codePostal = rs.getString("code_postal");
 		String ville = rs.getString("ville");
-		String mot_de_passe = rs.getString("mot_de_passe");
+		String motDePasse = rs.getString("mot_de_passe");
 		
 		int credit = rs.getInt("credit");
 		int administrateur = rs.getInt("administrateur");
 		
-		return new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur);
+		return new Utilisateur(idUser, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 	
 	}
 	

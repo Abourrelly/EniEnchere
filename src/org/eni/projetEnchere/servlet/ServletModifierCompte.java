@@ -64,7 +64,7 @@ public class ServletModifierCompte extends HttpServlet {
 				String ville = request.getParameter("ville");
 				String mot_de_passe = request.getParameter("mot_de_passe");
 				
-				userManager.update_user(id_int, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
+				userManager.updateUser(id_int, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
 			
 			}	
 			

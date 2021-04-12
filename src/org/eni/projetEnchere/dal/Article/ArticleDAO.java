@@ -16,12 +16,12 @@ import org.eni.projetEnchere.bo.Utilisateur;
  */
 public interface ArticleDAO {
 
-	public ArticleVendu sale_article(int id, ArticleVendu article, int id_categorie) throws Exception;
+	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, int idCategorie) throws Exception;
 	
-	public List<ArticleVendu> get_all_article_user_connect(int id) throws Exception;
+	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception;
 
-	public List<ArticleVendu> get_all_article_user_disconnect() throws Exception;
+	public List<ArticleVendu> getAllArticleUserDisconnect() throws Exception;
 	
-	public ArticleVendu send_payement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception;
+	public ArticleVendu sendPayement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception;
 
 }
