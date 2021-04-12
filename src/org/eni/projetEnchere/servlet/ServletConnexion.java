@@ -18,15 +18,14 @@ import org.eni.projetEnchere.bll.UserManager;
 @WebServlet("/connexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ServletConnexion() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ServletConnexion() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         
 		String input = request.getParameter("identifiant");

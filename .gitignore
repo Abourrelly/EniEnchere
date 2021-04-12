@@ -1,53 +1,57 @@
-# Project Ignores Files
+#
+# Project specific excludes
+#
 
-# Maven
-.mvn
-*.classpath
-*.project
-*.settings
-/bin/*
-/target/*
+tomcat
 
-#gradle
-.gradle
-/build
+#
+# Default excludes
+#
 
-# Compiled class file
-*.class
-
-# Package Files
+# Binaries
+*.7z
+*.dmg
+*.gz
+*.iso
 *.jar
+*.rar
+*.tar
+*.zip
 *.war
 *.ear
-*.zip
-*.tar.gz
-*.rar
+*.sar
+*.class
 
+# Maven 
+target/
 
-# JetBrains IDEs
-.idea/
+# IntelliJ project files 
 *.iml
-/lib
+*.iws
+*.ipr
+.idea/
 
-# Eclipse
-.project
+# eclipse project file
+.settings/
 .classpath
-.settings
+.project
 
-# Netbeans
-nbactions*.xml
-nb-configuration*.xml
+# NetBeans specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 
 
-# Folder config file
-Desktop.ini
+# OS
+.DS_Store
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-#Extra Folders
-/unused
-**/.DS_Store
-
-#spring
-.springBeans
+# Misc
+*.swp
+release.properties
+pom.xml.releaseBackup
+pom.xml.tag
+/bin/

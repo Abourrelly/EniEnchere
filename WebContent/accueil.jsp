@@ -16,58 +16,135 @@
     <title>Eni-Enchères - Accueil</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="ressource/css/accueil.css" rel="stylesheet">
 </head>
 <body>
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="ressource/JS/accueil.js"></script>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <a class="navbar-brand" href="#">Eni-Enchères</a>
 
     <div class="collapse navbar-collapse" id="navbarColor01">
+<%--        <ul class="navbar-nav ml-auto">--%>
+<%--            <li class="nav-item active">--%>
+<%--                <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter</a>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter
-                    <span class="sr-only">(current)</span>
-                </a>
+                <a class="nav-link" href="#">Enchères</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Vendre un article</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="<%=request.getContextPath() %>/creation">Mon profil</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Déconnexion</a>
             </li>
         </ul>
     </div>
 </nav>
 
-<h2 class="text-center mt-4">Liste des enchères</h2>
-
-<div class="row ml-5 mt-5">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3">
-        <div class="card border-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">Filtres :</div>
-            <div class="card-body">
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control" type="text" placeholder="Mots à filtrer...">
-                    <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
-                    <div>
-                        <h6 class="mt-2">Catégorie :</h6>
-                        <div class="form-group">
-                            <select class="form-control" id="exampleSelect1">
-                                <option>Informatique</option>
-                                <option>Ameublement</option>
-                                <option>Vêtement</option>
-                                <option>Sport & Loisirs</option>
-                            </select>
-                        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 mt-5">
+            <h2 class="text-center">Liste des enchères</h2>
+        </div>
+        <div class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
+            <div class="col-sm-6">
+                <div class="card border-info" style="max-width: 20rem;">
+                    <div class="card-header">Filtres :</div>
+                    <div class="card-body">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control" type="text" placeholder="Mots à filtrer...">
+                            <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
+                            <div>
+                                <h6 class="mt-2">Catégorie :</h6>
+                                <div class="form-group">
+                                    <select class="form-control" id="exampleSelect1">
+                                        <option>Toutes</option>
+                                        <option>Informatique</option>
+                                        <option>Ameublement</option>
+                                        <option>Vêtement</option>
+                                        <option>Sport & Loisirs</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-info btn-lg btn-block">Rechercher</button>
             </div>
         </div>
+        <div  id ="searchElement" class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
+            <div class="col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-check-label mb-2">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="" onchange="swapCheckbox(this)">
+                        Achats
+                    </label>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Enchères ouvertes
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères en cours
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères remportées
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-check-label mb-2">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onchange="swapCheckbox(this)">
+                        Ventes
+                    </label>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Enchères ouvertes
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères en cours
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères remportées
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
+            Enchères affichées
+        </div>
     </div>
-    <div class="col-lg-3 mt-5">
-        <button type="button" class="btn btn-info btn-lg btn-block">Rechercher</button>
-    </div>
-    <div class="col-lg-3"></div>
 </div>
+
 
 </body>
 </html>
