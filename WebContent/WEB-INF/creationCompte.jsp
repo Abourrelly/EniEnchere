@@ -15,6 +15,7 @@
     <title>Eni-Enchères - Création de compte</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
 </head>
 <body>
 <!-- Bootstrap core JavaScript -->
@@ -27,47 +28,47 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
+        <div class="col-sm-12 mt-5">
             <h2 class="text-center">Mon profil</h2>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 mt-5">
+        <div class="col-sm-6 mt-5">
             <form>
                 <div class="form-group">
                     <label for="pseudo">Pseudo</label>
-                    <input type="text" class="form-control" id="pseudo">
+                    <input type="text" class="form-control" id="pseudo" name="pseudo">
                     <label for="prenom">Prénom</label>
-                    <input type="text" class="form-control" id="prenom">
+                    <input type="text" class="form-control" id="prenom" name="prenom">
                     <label for="telephone">Téléphone</label>
-                    <input type="text" class="form-control" id="telephone">
+                    <input type="text" class="form-control" id="telephone" name="telephone">
                     <label for="cp">Code postal</label>
-                    <input type="text" class="form-control" id="cp">
+                    <input type="text" class="form-control" id="cp" name="cp">
                     <label for="exampleInputPassword1">Mot de passe</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="pass">
                 </div>
             </form>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 mt-5">
+        <div class="col-sm-6 mt-5">
             <form>
                 <div class="form-group">
                     <label for="nom">Nom</label>
-                    <input type="text" class="form-control" id="nom">
+                    <input type="text" class="form-control" id="nom" name="nom">
                     <label for="exampleInputEmail1">Email</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
                     <label for="rue">Rue</label>
-                    <input type="text" class="form-control" id="rue">
+                    <input type="text" class="form-control" id="rue" name="rue">
                     <label for="ville">Ville</label>
-                    <input type="text" class="form-control" id="ville">
+                    <input type="text" class="form-control" id="ville" name="ville">
                     <label for="confirmEmail">Confirmation</label>
-                    <input type="email" class="form-control" id="confirmEmail" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" id="confirmEmail" aria-describedby="emailHelp" name="confirmation">
                 </div>
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 mt-3 text-right">
+        <div class="col-sm-6 mt-3 text-right">
             <button class="submit btn btn-info">Créer</button>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 mt-3 text-left">
+        <div class="col-sm-6 mt-3 text-left">
             <a href="<%=request.getContextPath() %>/connexion" class="btn btn-info">Annuler</a>
         </div>
     </div>

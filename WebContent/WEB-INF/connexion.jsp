@@ -16,6 +16,7 @@
     <title>Eni-Enchères - Connexion</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
 </head>
 <body>
 
@@ -29,10 +30,10 @@
 <div class="row ml-5 mt-5">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
-        <form action="connexion" method="POST">
+        <form action="connexion" method="post">
             <div class="form-group">
                 <label for="identifiant">Identifiant :</label>
-                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant">
+                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant" value="<%= session.getAttribute("pseudo") %>"/>
             </div>
             <div class="form-group">
                 <label for="pass">Mot de passe :</label>
@@ -43,7 +44,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-check col-md-4">
-                                <button class="btn btn-info" type="submit">Connexion</button>
+                                <input type="submit" class="btn btn-info" value="Connexion" />
                             </div>
                         </div>
                         <div class="form-check disabled col-md-4">
