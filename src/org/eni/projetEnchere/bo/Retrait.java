@@ -1,35 +1,27 @@
 package org.eni.projetEnchere.bo;
 
 public class Retrait {
-	
-	private int id;
-    private ArticleVendu idArticle;
+
+    private ArticleVendu no_article;
     private String rue;
-    private String codePostal;
+    private String code_postal;
     private String ville;
 
     public Retrait() {
     }
 
-    public Retrait(String rue, String codePostal, String ville) {
+    public Retrait(String rue, String code_postal, String ville) {
         this.rue = rue;
-        this.codePostal = codePostal;
-        this.ville = ville;
-    }
-    
-    public Retrait(int id, String rue, String codePostal, String ville) {
-    	this.id = id;
-    	this.rue = rue;
-        this.codePostal = codePostal;
+        this.code_postal = code_postal;
         this.ville = ville;
     }
 
-    public ArticleVendu getIdArticle() {
-        return idArticle;
+    public ArticleVendu getNo_article() {
+        return no_article;
     }
 
-    public void setIdArticle(ArticleVendu idArticle) {
-        this.idArticle = idArticle;
+    public void setNo_article(ArticleVendu no_article) {
+        this.no_article = no_article;
     }
 
     public String getRue() {
@@ -41,11 +33,11 @@ public class Retrait {
     }
 
     public String getCode_postal() {
-        return codePostal;
+        return code_postal;
     }
 
-    public void setCodePostal(String codePostal) {
-        this.codePostal = codePostal;
+    public void setCode_postal(String code_postal) {
+        this.code_postal = code_postal;
     }
 
     public String getVille() {
@@ -59,9 +51,9 @@ public class Retrait {
     @Override
     public String toString() {
         return "Retrait{" +
-                "idArticle=" + idArticle +
+                "no_article=" + no_article +
                 ", rue='" + rue + '\'' +
-                ", codePostal='" + codePostal + '\'' +
+                ", code_postal='" + code_postal + '\'' +
                 ", ville='" + ville + '\'' +
                 '}';
     }

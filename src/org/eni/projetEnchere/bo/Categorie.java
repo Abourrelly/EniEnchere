@@ -2,37 +2,22 @@ package org.eni.projetEnchere.bo;
 
 public class Categorie {
 
-	private int id;
-    private int idCategorie;
-	private String libelle;
+    private int no_categorie;
+    private String libelle;
 
     public Categorie() {
     }
-    
-    /**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
 
     public Categorie(String libelle) {
         this.libelle = libelle;
     }
 
-    public int getIdCategorie() {
-        return idCategorie;
+    public int getNo_categorie() {
+        return no_categorie;
     }
 
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setNo_categorie(int no_categorie) {
+        this.no_categorie = no_categorie;
     }
 
     public String getLibelle() {
@@ -46,8 +31,7 @@ public class Categorie {
     @Override
     public String toString() {
         return "Categorie{" +
-        		"id=" + id +
-        		", idCategorie=" + idCategorie +
+                "no_categorie=" + no_categorie +
                 ", libelle='" + libelle + '\'' +
                 '}';
     }
