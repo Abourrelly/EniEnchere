@@ -67,72 +67,72 @@
                             <div class="form-group col-sm-6">
                                 <label for="filtreMots">Par mot : </label>
                                 <input class="form-control ml-2" type="text" placeholder="Mots à filtrer..." name="filtreMots" id="filtreMots">
-                                <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
+                            <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="exampleSelect1">Par catégorie : </label>
                                 <select class="form-control ml-2" id="exampleSelect1">
-                                    <option>Toutes</option>
-                                    <option>Informatique</option>
-                                    <option>Ameublement</option>
-                                    <option>Vêtement</option>
-                                    <option>Sport & Loisirs</option>
-                                </select>
+                                        <option>Toutes</option>
+                                        <option>Informatique</option>
+                                        <option>Ameublement</option>
+                                        <option>Vêtement</option>
+                                        <option>Sport & Loisirs</option>
+                                    </select>
                             </div>
                         </form>
                         <div id ="searchElement" class="d-flex col-sm-12 mt-3 align-items-center justify-content-center">
-                            <div class="col-sm-6">
-                                <fieldset class="form-group">
-                                    <label class="form-check-label mb-2">
-                                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="" onchange="swapCheckbox(this)">
-                                        Achats
-                                    </label>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
-                                            Enchères ouvertes
-                                        </label>
-                                    </div>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
-                                            Mes enchères en cours
-                                        </label>
-                                    </div>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
-                                            Mes enchères remportées
-                                        </label>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="col-sm-6">
-                                <fieldset class="form-group">
-                                    <label class="form-check-label mb-2">
-                                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onchange="swapCheckbox(this)">
-                                        Ventes
-                                    </label>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
-                                            Enchères ouvertes
-                                        </label>
-                                    </div>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
-                                            Mes enchères en cours
-                                        </label>
-                                    </div>
-                                    <div class="form-check ml-3">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
-                                            Mes enchères remportées
-                                        </label>
-                                    </div>
-                                </fieldset>
-                            </div>
+            <div class="col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-check-label mb-2">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="" onchange="swapCheckbox(this)">
+                        Achats
+                    </label>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Enchères ouvertes
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères en cours
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option1-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères remportées
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-sm-6">
+                <fieldset class="form-group">
+                    <label class="form-check-label mb-2">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" onchange="swapCheckbox(this)">
+                        Ventes
+                    </label>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Enchères ouvertes
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères en cours
+                        </label>
+                    </div>
+                    <div class="form-check ml-3">
+                        <label class="form-check-label">
+                            <input class="form-check-input option2-checkbox" type="checkbox" value="" checked="">
+                            Mes enchères remportées
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
                         </div>
                         <div class="row col-sm-12 mt-2">
                             <div class="col-sm-4"></div>
