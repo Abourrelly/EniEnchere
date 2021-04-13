@@ -53,6 +53,12 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	
 	private static final String UPDATE_FIRST_USER_BEST_MONTANT = "UPDATE ENCHERE_GRP1.UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
 	
+	
+	
+	private static final String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GR1.ARTICLES_VENDUS WHERE no_article = ?";
+	
+	private static final String SELECT_BEST_ENCHERE_BY_ID_ARTICLE = "SELECT MAX(montant_enchere), no_utilisateur FROM ENCHERE_GRP1.ENCHERES WHERE no_article = 3 GROUP BY no_utilisateur, montant_enchere ORDER BY montant_enchere DESC";
+	
 	@Override
 	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
@@ -279,6 +285,76 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		return null;
 	}
 	
+	
+//	En tant qu’utilisateur, 
+//	je peux afficher le détail d’une enchère. 
+//	Les informations sur l’article vendu sont affichés 
+//	( nom, description, meilleure offre, mise à prix, début et fin de l’enchère, adresse de retrait, vendeur. 
+//	En fonction de l’état de la vente, et du rôle de l’utilisateur (vendeur ou acheteur), 
+//	l’utilisateur peux seulement consulter 
+//	les information, enchérir, ou modifier la vente (si il est le vendeur et que l’enchère n’a pas débuté).
+	
+
+	@Override
+	public ArticleVendu getInfosArticle(int id) throws Exception {
+		// TODO Auto-generated method stub
+		
+		ArticleVendu article = null;
+		int montantEnchere = 0;
+		int idUser = 0;
+		String pseudoUser = "";
+		
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+			
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
+			pStmt.setInt(1, id);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if(rs.next()) {
+
+				article = mapArticle(rs);
+				
+			}
+			
+			PreparedStatement pStmtEnchere = cnx.prepareStatement(SELECT_BEST_ENCHERE_BY_ID_ARTICLE);
+			pStmtEnchere.setInt(1, id);
+			
+			ResultSet rsEnchere = pStmtEnchere.executeQuery();
+			
+			if(rsEnchere.next()) {
+				
+				montantEnchere = rsEnchere.getInt("montant_enchere");
+				idUser = rsEnchere.getInt("no_utilisateur");
+					
+				// recuperation du nom user
+				
+				UserManager userManager = new UserManager();
+				
+				Utilisateur UserBestEnchere = userManager.getInfosProfile(idUser);
+				
+				pseudoUser = UserBestEnchere.getPseudo();
+				
+				Utilisateur user = new Utilisateur(); 
+				user.setId(rs.getInt("no_utilisateur"));
+				user.setId(UserBestEnchere.getPseudo());
+				article.setIdUser(user);
+				
+				
+				
+			} else {
+				// aucun resultat
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return article;
+	}
+	
 	private String nowDate() {
 		
 		Date now = new Date();
@@ -291,6 +367,19 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		
 		return nowFormatString;
 	}
-
+	
+	private ArticleVendu mapArticle(ResultSet rs) throws SQLException {
+		
+		int idArticle = rs.getInt("no_article");
+		String nom = rs.getString("nom_article");
+		String description = rs.getString("description");
+		String dateDebutEncheres = rs.getString("date_debut_enchere");
+		String dateFinEncheres = rs.getString("date_fin_enchere");
+		int prixInitial = rs.getInt("prix_initial");
+		int prixVente = rs.getInt("prix_vente");
+				
+		return new ArticleVendu(idArticle, nom, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente);
+	
+	}
 
 }

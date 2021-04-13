@@ -110,4 +110,10 @@ public class ArticleManager {
 
 	}
 	
+	public ArticleVendu getInfosArticle(int id) throws Exception{
+		
+		return articleDao.getInfosArticle(id);
+		
+	}
+	
 }

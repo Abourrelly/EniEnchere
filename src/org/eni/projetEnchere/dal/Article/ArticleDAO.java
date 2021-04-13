@@ -24,4 +24,6 @@ public interface ArticleDAO {
 	
 	public ArticleVendu sendPayement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception;
 
+	public ArticleVendu getInfosArticle(int id) throws Exception;
+
 }
