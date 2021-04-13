@@ -81,13 +81,13 @@ public class ArticleManager {
 	
 	public void sendPayement(Utilisateur user, int idArticle, int miseAPrit, int meilleurOffre, int proposition) throws Exception{
 		
-		if(user.getCredit() >= proposition) {
+		if((user.getCredit() >= proposition) && (proposition >= miseAPrit) && (proposition > meilleurOffre)) {
 			// le reliquat est superieur ou egale a la propistion faite pour encherire
 			
-			if(proposition >= miseAPrit) {
+			//if(proposition >= miseAPrit) {
 				// si la proposition est superieur ou egale a la mise a prit 
 				
-				if(proposition > meilleurOffre) {
+				//if(proposition > meilleurOffre) {
 					// la propostion est superieur a la meilleur offre et la meilleur offre 
 					
 					ArticleVendu article= new ArticleVendu(); 
@@ -99,9 +99,9 @@ public class ArticleManager {
 					
 					articleDao.sendPayement(user, article, enchere);
 					
-				}
+				//}
 
-			}
+			//}
 			
 		} else {
 			// pas assez de monaie pour encherire

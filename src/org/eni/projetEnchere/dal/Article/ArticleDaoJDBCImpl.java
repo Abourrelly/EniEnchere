@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.eni.projetEnchere.bll.UserManager;
 import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Categorie;
 import org.eni.projetEnchere.bo.Enchere;
@@ -194,15 +195,16 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			
 			int totale = 0;
 			
+			int totaleReversement = 0;
+			
 			int bestMontant = enchere.getMontantEnchere();
-			System.out.println(bestMontant);
+			//System.out.println(bestMontant);
 			
 			int credit = user.getCredit();
-			System.out.println(credit);
+			//System.out.println(credit);
 			
 			totale = credit - bestMontant;
-			
-			System.out.println(totale);
+			//System.out.println(totale);
 			
 			PreparedStatement pStmtBestMontant= cnx.prepareStatement(UPDATE_FIRST_USER_BEST_MONTANT);
 			pStmtBestMontant.setInt(1, totale);
@@ -223,7 +225,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 				//article.setNo_article(rsEnchere.getInt(1));
 			//}
 			
-			PreparedStatement pStmtSelectEnchere = cnx.prepareStatement(SELECT_LAST_USER_BEST_ENCHERE);
+			PreparedStatement pStmtSelectEnchere = cnx.prepareStatement(SELECT_LAST_USER_BEST_ENCHERE, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			
 			pStmtSelectEnchere.setInt(1, bestMontant);
 			pStmtSelectEnchere.setInt(2, article.getIdArticle());
@@ -234,21 +236,41 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			int montantEnchere = 0;
 			
 			while(rsSelectEnchere.next()) {
-				idLastUser = rsSelectEnchere.getInt("no_utilisateur");
 				
-				System.out.println(idLastUser);
+				if(rsSelectEnchere.isLast()) {
+				// is last row in ResultSet
+				// resultat pas vide
+					
+					idLastUser = rsSelectEnchere.getInt("no_utilisateur");
+					//System.out.println(idLastUser);
+					
+					// recupere le credit 
+					
+					UserManager userManager = new UserManager();
+					
+					Utilisateur lastEnchereUser = userManager.getInfosProfile(idLastUser);
+					
+					int lastEnchereUserCredit = lastEnchereUser.getCredit();
+					
+					montantEnchere = rsSelectEnchere.getInt("montant_enchere");
+					//System.out.println(montantEnchere);
+					
+					totaleReversement = montantEnchere + lastEnchereUserCredit;
+					//System.out.println(totaleReversement);
+					
+					PreparedStatement pStmtUpdateCreditUser = cnx.prepareStatement(UPDATE_LAST_USER_BEST_ENCHERE);
+					
+					pStmtUpdateCreditUser.setInt(1, totaleReversement);
+					pStmtUpdateCreditUser.setInt(2, idLastUser);
+					
+					pStmtUpdateCreditUser.executeUpdate();
 				
-				montantEnchere = rsSelectEnchere.getInt("montant_enchere");
-				
-				System.out.println(montantEnchere);
+				} else {
+					// resultat vide
+					
+				}
+	
 			}
-//			
-//			PreparedStatement pStmtUpdateCreditUser = cnx.prepareStatement(UPDATE_LAST_USER_BEST_ENCHERE);
-//			
-//			pStmtUpdateCreditUser.setInt(1, montantEnchere);
-//			pStmtUpdateCreditUser.setInt(2, user.getId());
-//			
-//			ResultSet rsUpdateCreditUser = pStmtUpdateCreditUser.executeQuery();
 						
 		} catch (Exception e) {
 			e.printStackTrace();

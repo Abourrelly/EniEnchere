@@ -32,7 +32,7 @@ public class test {
 		
 		UserManager userManager = new UserManager();
 		
-		Utilisateur user = userManager.getInfosProfile(17);
+		Utilisateur user = userManager.getInfosProfile(23);
 		
 		//Date now = new Date();
 //		
@@ -56,7 +56,7 @@ public class test {
 //		4 = terminées
 //		System.out.println(articleManager.get_all_article_user_connect(17, 4));
 		
-		articleManager.sendPayement(user, 3, 1, 0, 400);
+		//articleManager.sendPayement(user, 3, 1, 114, 300);
 	
 	}
 
