@@ -5,7 +5,6 @@ package org.eni.projetEnchere.dal.User;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +19,6 @@ import org.eni.projetEnchere.dal.ConnectionProvider;
  *
  */
 public class UserDaoJDBCImpl implements UserDAO {
-	
 //  private int no_utilisateur;
 //  private String pseudo;
 //  private String nom;
@@ -33,29 +31,23 @@ public class UserDaoJDBCImpl implements UserDAO {
 //  private String mot_de_passe;
 //  private int credit;
 //  private int administrateur;
+
+	
+	private static final String GET_USER_FOR_EMAIL = "SELECT email, mot_de_passe FROM ENCHERE_GRP1.UTILISATEURS WHERE email = ?";
+	
+	private static final String GET_USER_FOR_PSEUDO = "SELECT pseudo, mot_de_passe FROM ENCHERE_GRP1.UTILISATEURS WHERE pseudo = ?";
 	
 	private static final String SELECT_BY_PSEUDO_AND_EMAIL = "SELECT pseudo, email FROM ENCHERE_GRP1.UTILISATEURS WHERE pseudo = ? AND email = ?";
 	
-	private static final String GET_USER_FOR_EMAIL = "SELECT no_utilisateur, email, mot_de_passe FROM ENCHERE_GRP1.UTILISATEURS WHERE email = ?";
-	
-	private static final String GET_USER_FOR_PSEUDO = "SELECT no_utilisateur, pseudo, mot_de_passe FROM ENCHERE_GRP1.UTILISATEURS WHERE pseudo = ?";
-	
 	private static final String INSERT_USER = "INSERT INTO ENCHERE_GRP1.UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
-	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
 
-	private static final String UPDATE_USER = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
-
-	private static final String DELETE_USER = "DELETE FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
-	
-	
 	@Override
-	public int connect(String input, String password, boolean choiceRequete) throws Exception {
+	public boolean connect(String input, String password, boolean choice_requete) throws Exception {
 		// TODO Auto-generated method stub
 		
 		String requete = null;
 		
-		if (choiceRequete == true) {
+		if (choice_requete == true) {
 		    // si c'est un email
 			requete = GET_USER_FOR_EMAIL;
 			
@@ -77,26 +69,33 @@ public class UserDaoJDBCImpl implements UserDAO {
 				
 				if (rs.next()) {
 					// resultat pas vide
-					String passwordInDb = rs.getString("mot_de_passe");
+					String password_in_db = rs.getString("mot_de_passe");
 					
-					String passwordEncrypt = encryptPassword(password);
+					MessageDigest msg = MessageDigest.getInstance("SHA-256");
+			        byte[] hash = msg.digest(password.getBytes(StandardCharsets.UTF_8));
+			        // convertir bytes en hexadécimal
+			        StringBuilder s = new StringBuilder();
+			        for (byte b : hash) {
+			            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+			        }
+			        String singleString = s.toString();
 			        
-			        if(passwordEncrypt.equals(passwordInDb)) {
+			        if(singleString.equals(password_in_db)) {
 			        	// password correct
-			        	int id = rs.getInt("id");
-			        	return id;
+			        	return true;
 			        	
 			        } else {
 			        	// password incorrect
-			        	return 0;
+			        	return false;
 			        	
 			        }
 					
 				} else {
 					// Aucun resultat / vide
-					return 0;
+					return false;
 					
 				}
+				
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -104,13 +103,14 @@ public class UserDaoJDBCImpl implements UserDAO {
 			
 		}
 		
-		return 0;
+		return false;
 
 	}
 
 	@Override
 	public Utilisateur subscribe(Utilisateur newUser) throws Exception {
 		// TODO Auto-generated method stub
+		
 		
 //		En tant qu’utilisateur, 
 //		je peux m’inscrire sur la plateforme Enchères.org. 
@@ -129,13 +129,21 @@ public class UserDaoJDBCImpl implements UserDAO {
 			pStmtUser.setString(4, newUser.getEmail());
 			pStmtUser.setString(5, newUser.getTelephone());
 			pStmtUser.setString(6, newUser.getRue());
-			pStmtUser.setString(7, newUser.getCodePostal());
+			pStmtUser.setString(7, newUser.getCode_postal());
 			pStmtUser.setString(8, newUser.getVille());
 			
-			String password = encryptPassword(newUser.getMotDePasse());
-			
-			pStmtUser.setString(9, password);
-			
+			String mdp = newUser.getMot_de_passe();
+
+	        MessageDigest msg = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = msg.digest(mdp.getBytes(StandardCharsets.UTF_8));
+	        // convertir bytes en hexadécimal
+	        StringBuilder s = new StringBuilder();
+	        for (byte b : hash) {
+	            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+	            
+	        }
+	        String singleString = s.toString();
+	        pStmtUser.setString(9, singleString);
 	        pStmtUser.setInt(10, 0);
 	        pStmtUser.setInt(11, 0);
 			
@@ -143,7 +151,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 			
 			ResultSet rsUser = pStmtUser.getGeneratedKeys();
 			if(rsUser.next()) {
-				newUser.setId(rsUser.getInt(1));
+				newUser.setNo_utilisateur(rsUser.getInt(1));
 			}
 			
 		} catch (SQLException e) {
@@ -154,7 +162,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean checkUniquePseudoAndEmail(String pseudo, String email) {
+	public boolean check_unique_pseudo_and_email(String pseudo, String email) {
 		// TODO Auto-generated method stub
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
@@ -178,113 +186,6 @@ public class UserDaoJDBCImpl implements UserDAO {
 		
 		return false;
 			
-	}
-
-	@Override
-	public Utilisateur getInfosProfile(int id) throws Exception {
-		// TODO Auto-generated method stub
-		
-		Utilisateur user = null;
-		
-		try(Connection cnx = ConnectionProvider.getConnection()) {
-			
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_ID);
-			pStmt.setInt(1, id);
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			if (rs.next()) {
-				// resultat pas vide
-				user = mapUser(rs);
-				
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return user;
-		
-	}
-	
-	@Override
-	public void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception {
-		
-		try(Connection cnx = ConnectionProvider.getConnection()) {
-			
-			PreparedStatement pStmtUser = cnx.prepareStatement(UPDATE_USER);
-			
-			pStmtUser.setString(1, pseudo);
-			pStmtUser.setString(2, nom);
-			pStmtUser.setString(3, prenom);
-			pStmtUser.setString(4, email);
-			pStmtUser.setString(5, telephone);
-			pStmtUser.setString(6, rue);
-			pStmtUser.setString(7, codePostal);
-			pStmtUser.setString(8, ville);
-			
-			String password = encryptPassword(motDePasse);
-			
-			pStmtUser.setString(9, password);
-			pStmtUser.setInt(10, id);
-			
-			pStmtUser.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Override
-	public void deleteUser(int id) {
-		
-		try(Connection cnx = ConnectionProvider.getConnection()) {
-			
-			PreparedStatement pStmt = cnx.prepareStatement(DELETE_USER);
-			pStmt.setInt(1, id);
-			
-			pStmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private String encryptPassword(String password) throws Exception {
-		
-		MessageDigest msg = MessageDigest.getInstance("SHA-256");
-        byte[] hash = msg.digest(password.getBytes(StandardCharsets.UTF_8));
-        // convertir bytes en hexadécimal
-        StringBuilder s = new StringBuilder();
-        for (byte b : hash) {
-            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-            
-        }
-        String singleString = s.toString();
-        return singleString;
-        
-	}
-	
-	private Utilisateur mapUser(ResultSet rs) throws SQLException {
-				
-		int idUser = rs.getInt("no_utilisateur");
-		String pseudo = rs.getString("pseudo");
-		String nom = rs.getString("nom");
-		String prenom = rs.getString("prenom");
-		String email = rs.getString("email");
-		String telephone = rs.getString("telephone");
-		String rue = rs.getString("rue");
-		String codePostal = rs.getString("code_postal");
-		String ville = rs.getString("ville");
-		String motDePasse = rs.getString("mot_de_passe");
-		
-		int credit = rs.getInt("credit");
-		int administrateur = rs.getInt("administrateur");
-		
-		return new Utilisateur(idUser, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-	
 	}
 	
 }

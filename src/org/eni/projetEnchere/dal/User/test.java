@@ -26,14 +26,6 @@ public class test {
 		
 		UserManager userManager = new UserManager();
 		
-		//userManager.deleteUser(16);
-				
-		//userManager.updateUser(17, "gatoww", "saav", "gaetan", "g@gss.co", "0658454545", "9", "35000", "dinan", "azerty");
-		
-		
-		//Utilisateur user = userManager.getInfosProfile(17);
-		//System.out.println(user);
-		
 		//Utilisateur user = userManager.subscribe("gatowsss", "saav", "gaetan", "g@gss.co", "0658454545", "9", "35000", "dinan", "bla", 0, 0);
 		
 //		boolean v = userManager.connect("g@gss.co", "bla");
