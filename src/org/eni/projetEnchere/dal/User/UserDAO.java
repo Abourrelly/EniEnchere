@@ -24,7 +24,7 @@ public interface UserDAO {
 //    private int credit;
 //    private int administrateur;
 //
-	public int connect(String email, String motDePasse, boolean choice_requete) throws Exception;
+	public boolean connect(String email, String mot_de_passe, boolean choice_requete) throws Exception;
 
 //
 //	En tant qu’utilisateur,
@@ -36,12 +36,5 @@ public interface UserDAO {
 //
 	public Utilisateur subscribe(Utilisateur newUser) throws Exception;
 
-	boolean checkUniquePseudoAndEmail(String pseudo, String email);
-
-	public Utilisateur getInfosProfile(int id) throws Exception;
-
-	void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception;
-
-	void deleteUser(int id) throws Exception;
-	
+	boolean check_unique_pseudo_and_email(String pseudo, String email);
 }
