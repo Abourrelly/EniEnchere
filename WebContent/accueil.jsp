@@ -47,7 +47,7 @@
                 <a class="nav-link" href="<%=request.getContextPath() %>/voirProfil">Mon profil</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link pt-1" href="<%=request.getContextPath() %>/deconnexion"><i class="text-dark flaticon-power-symbol-variant-hand-drawn-outline"></i></a>
+                <a class="nav-link pt-1" href="<%=request.getContextPath() %>/deconnexion"><img src="ressource/Icon/svg/power-symbol-variant-hand-drawn-outline.svg" height="24px" width="24px"></a>
             </li>
         </ul>
     </div>
@@ -67,7 +67,7 @@
                             <div class="form-group col-sm-6">
                                 <label for="filtreMots">Par mot : </label>
                                 <input class="form-control ml-2" type="text" placeholder="Mots à filtrer..." name="filtreMots" id="filtreMots">
-                                <button class="btn btn-info" type="submit"><i class="text-dark flaticon-funnel-hand-drawn-symbol"></i></button>
+                                <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="exampleSelect1">Par catégorie : </label>
