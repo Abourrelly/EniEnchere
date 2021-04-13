@@ -1,3 +1,7 @@
+$( document ).ready(function() {
+    swapCheckbox($("#optionsRadios1"))
+});
+
 function swapCheckbox(input) {
     let inputTemp = $(input).val()
 
