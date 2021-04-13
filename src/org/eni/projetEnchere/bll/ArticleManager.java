@@ -14,6 +14,7 @@ import java.util.List;
 import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Categorie;
 import org.eni.projetEnchere.bo.Enchere;
+import org.eni.projetEnchere.bo.Retrait;
 import org.eni.projetEnchere.bo.Utilisateur;
 import org.eni.projetEnchere.dal.Article.ArticleDAO;
 
@@ -31,7 +32,7 @@ public class ArticleManager {
 		articleDao = DAOFactory.getArticleDAO();
 	}
 	
-	public ArticleVendu saleArtilce(int id, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, int idCategorie) throws Exception {
+	public ArticleVendu saleArtilce(int id, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, int idCategorie, String rue, String codePostal, String ville) throws Exception {
 		
 //		En tant qu’utilisateur, 
 //		je peux vendre un article sur la plateforme ENI-Enchères. 
@@ -55,7 +56,18 @@ public class ArticleManager {
 		
 		Utilisateur user = userManager.getInfosProfile(id);
 		
-		return articleDao.saleArticle(user, article, idCategorie);
+		Retrait retrait = null;
+		
+		if(rue != "" && codePostal != "" && ville != "") {
+		
+			retrait = new Retrait(rue, codePostal, ville);
+			
+		} else {
+			// les champs non pas été remplis 
+			
+		}
+		
+		return articleDao.saleArticle(user, article, retrait, idCategorie);
 		
 	}
 	
@@ -83,26 +95,18 @@ public class ArticleManager {
 		
 		if((user.getCredit() >= proposition) && (proposition >= miseAPrit) && (proposition > meilleurOffre)) {
 			// le reliquat est superieur ou egale a la propistion faite pour encherire
+			// si la proposition est superieur ou egale a la mise a prit 
+			// la propostion est superieur a la meilleur offre et la meilleur offre 
+					
+			ArticleVendu article= new ArticleVendu(); 
+			article.setIdArticle(idArticle);
 			
-			//if(proposition >= miseAPrit) {
-				// si la proposition est superieur ou egale a la mise a prit 
-				
-				//if(proposition > meilleurOffre) {
-					// la propostion est superieur a la meilleur offre et la meilleur offre 
-					
-					ArticleVendu article= new ArticleVendu(); 
-					article.setIdArticle(idArticle);
-					
-					LocalDate now = LocalDate.now();
+			LocalDate now = LocalDate.now();
+	
+			Enchere enchere = new Enchere(now, proposition);
 			
-					Enchere enchere = new Enchere(now, proposition);
-					
-					articleDao.sendPayement(user, article, enchere);
-					
-				//}
-
-			//}
-			
+			articleDao.sendPayement(user, article, enchere);
+	
 		} else {
 			// pas assez de monaie pour encherire
 			
@@ -113,6 +117,18 @@ public class ArticleManager {
 	public ArticleVendu getInfosArticle(int id) throws Exception{
 		
 		return articleDao.getInfosArticle(id);
+		
+	}
+	
+	public Enchere getInfosUserBestEnchereForArticle(int id) throws Exception{
+		
+		return articleDao.getInfosUserBestEnchereForArticle(id);
+		
+	}
+	
+	public Retrait getInfosRetraitForArticle(int id) throws Exception{
+		
+		return articleDao.getInfosRetraitForArticle(id);
 		
 	}
 	

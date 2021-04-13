@@ -17,6 +17,7 @@ import org.eni.projetEnchere.bll.UserManager;
 import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Categorie;
 import org.eni.projetEnchere.bo.Enchere;
+import org.eni.projetEnchere.bo.Retrait;
 import org.eni.projetEnchere.bo.Utilisateur;
 import org.eni.projetEnchere.dal.ConnectionProvider;
 
@@ -35,7 +36,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";                            
 
-	//private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS INNER JOIN ENCHERE_GRP1.ENCHERES ON ENCHERE_GRP1.ARTICLES_VENDUS.no_article = ENCHERE_GRP1.ENCHERES.no_article AND ENCHERE_GRP1.ARTICLES_VENDUS.no_utilisateur = ENCHERE_GRP1.ENCHERES.no_utilisateur WHERE no_utilisateur = ?";                            
+//	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS INNER JOIN ENCHERE_GRP1.ENCHERES ON ENCHERE_GRP1.ARTICLES_VENDUS.no_article = ENCHERE_GRP1.ENCHERES.no_article AND ENCHERE_GRP1.ARTICLES_VENDUS.no_utilisateur = ENCHERE_GRP1.ENCHERES.no_utilisateur WHERE no_utilisateur = ?";                            
 
 	
 //	date_debut_encheres <= ? AND date_fin_encheres >= ?
@@ -55,12 +56,14 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	
 	
 	
-	private static final String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GR1.ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String SELECT_ARTICLE_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_article = ?";
 	
-	private static final String SELECT_BEST_ENCHERE_BY_ID_ARTICLE = "SELECT MAX(montant_enchere), no_utilisateur FROM ENCHERE_GRP1.ENCHERES WHERE no_article = 3 GROUP BY no_utilisateur, montant_enchere ORDER BY montant_enchere DESC";
+	private static final String SELECT_BEST_ENCHERE_BY_ID_ARTICLE = "SELECT MAX(montant_enchere) AS montant_enchere, no_utilisateur FROM ENCHERE_GRP1.ENCHERES WHERE no_article = ? GROUP BY no_utilisateur, montant_enchere ORDER BY montant_enchere DESC";
+
+	private static final String SELECT_RETRAIT_BY_ID_ARTICLE = "SELECT no_article, rue, code_postal, ville FROM ENCHERE_GRP1.RETRAITS WHERE no_article = ?";
 	
 	@Override
-	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, int idCategorie) throws Exception {
+	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
@@ -84,9 +87,20 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 			
 			PreparedStatement pStmtRetrait= cnx.prepareStatement(INSERT_RETRAIT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pStmtRetrait.setInt(1, article.getIdArticle());
-			pStmtRetrait.setString(2, user.getRue());
-			pStmtRetrait.setString(3, user.getCodePostal());
-			pStmtRetrait.setString(4, user.getVille());
+			
+			if(retrait != null) {
+				// les champs on été remplis par l'utilisateur
+				pStmtRetrait.setString(2, retrait.getRue());
+				pStmtRetrait.setString(3, retrait.getCodePostal());
+				pStmtRetrait.setString(4, retrait.getVille());
+				
+			} else {
+				// les champs non pas été remplis
+				pStmtRetrait.setString(2, user.getRue());
+				pStmtRetrait.setString(3, user.getCodePostal());
+				pStmtRetrait.setString(4, user.getVille());
+				
+			}
 			
 			pStmtRetrait.executeUpdate();
 			
@@ -107,8 +121,6 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	@Override
 	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception{
 		// TODO Auto-generated method stub
-		
-		String nowFormatString = nowDate();
 				
 		List<ArticleVendu> result = new ArrayList<ArticleVendu>();
 		
@@ -231,7 +243,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 				//article.setNo_article(rsEnchere.getInt(1));
 			//}
 			
-			PreparedStatement pStmtSelectEnchere = cnx.prepareStatement(SELECT_LAST_USER_BEST_ENCHERE, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+			PreparedStatement pStmtSelectEnchere = cnx.prepareStatement(SELECT_LAST_USER_BEST_ENCHERE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			pStmtSelectEnchere.setInt(1, bestMontant);
 			pStmtSelectEnchere.setInt(2, article.getIdArticle());
@@ -296,19 +308,15 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	
 
 	@Override
-	public ArticleVendu getInfosArticle(int id) throws Exception {
+	public ArticleVendu getInfosArticle(int idArticle) throws Exception {
 		// TODO Auto-generated method stub
 		
 		ArticleVendu article = null;
-		int montantEnchere = 0;
-		int idUser = 0;
-		String pseudoUser = "";
-		
-		
+				
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
 			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
-			pStmt.setInt(1, id);
+			pStmt.setInt(1, idArticle);
 			
 			ResultSet rs = pStmt.executeQuery();
 			
@@ -318,41 +326,83 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 				
 			}
 			
-			PreparedStatement pStmtEnchere = cnx.prepareStatement(SELECT_BEST_ENCHERE_BY_ID_ARTICLE);
-			pStmtEnchere.setInt(1, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(article);
+
+		return article;
+		
+	}
+	
+	@Override
+	public Enchere getInfosUserBestEnchereForArticle(int idArticle) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Enchere enchere = null;
+		
+		int montantEnchere = 0;
+		int idUser = 0;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+		
+			PreparedStatement pStmtEnchere = cnx.prepareStatement(SELECT_BEST_ENCHERE_BY_ID_ARTICLE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			pStmtEnchere.setInt(1, idArticle);
 			
 			ResultSet rsEnchere = pStmtEnchere.executeQuery();
 			
-			if(rsEnchere.next()) {
+			if(rsEnchere.next()){
 				
-				montantEnchere = rsEnchere.getInt("montant_enchere");
 				idUser = rsEnchere.getInt("no_utilisateur");
-					
-				// recuperation du nom user
+				montantEnchere = rsEnchere.getInt("montant_enchere");
 				
 				UserManager userManager = new UserManager();
 				
 				Utilisateur UserBestEnchere = userManager.getInfosProfile(idUser);
 				
-				pseudoUser = UserBestEnchere.getPseudo();
-				
-				Utilisateur user = new Utilisateur(); 
-				user.setId(rs.getInt("no_utilisateur"));
-				user.setId(UserBestEnchere.getPseudo());
-				article.setIdUser(user);
-				
-				
+				enchere = new Enchere(UserBestEnchere, montantEnchere);
 				
 			} else {
 				// aucun resultat
 				
 			}
 			
-		} catch (Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
-		return article;
+		
+		System.out.println(enchere);
+		
+		return enchere;		
+	}
+	
+	@Override
+	public Retrait getInfosRetraitForArticle(int idArticle) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Retrait retrait = null;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+		
+			PreparedStatement pStmtRetrait = cnx.prepareStatement(SELECT_RETRAIT_BY_ID_ARTICLE, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			pStmtRetrait.setInt(1, idArticle);
+			
+			ResultSet rsRetrait = pStmtRetrait.executeQuery();
+			
+			if(rsRetrait.next()){
+				
+				retrait = mapRetrait(rsRetrait);
+			
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(retrait);
+		
+		return retrait;
 	}
 	
 	private String nowDate() {
@@ -373,12 +423,22 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		int idArticle = rs.getInt("no_article");
 		String nom = rs.getString("nom_article");
 		String description = rs.getString("description");
-		String dateDebutEncheres = rs.getString("date_debut_enchere");
-		String dateFinEncheres = rs.getString("date_fin_enchere");
+		String dateDebutEncheres = rs.getString("date_debut_encheres");
+		String dateFinEncheres = rs.getString("date_fin_encheres");
 		int prixInitial = rs.getInt("prix_initial");
 		int prixVente = rs.getInt("prix_vente");
 				
 		return new ArticleVendu(idArticle, nom, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente);
+	
+	}
+	
+	private Retrait mapRetrait(ResultSet rs) throws SQLException {
+
+		String rue = rs.getString("rue");
+		String codePostal = rs.getString("code_postal");
+		String ville = rs.getString("ville");
+		
+		return new Retrait(rue, codePostal, ville);
 	
 	}
 

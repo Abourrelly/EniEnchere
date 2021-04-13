@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Enchere;
+import org.eni.projetEnchere.bo.Retrait;
 import org.eni.projetEnchere.bo.Utilisateur;
 
 /**
@@ -16,7 +17,7 @@ import org.eni.projetEnchere.bo.Utilisateur;
  */
 public interface ArticleDAO {
 
-	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, int idCategorie) throws Exception;
+	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception;
 	
 	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception;
 
@@ -25,5 +26,9 @@ public interface ArticleDAO {
 	public ArticleVendu sendPayement(Utilisateur user, ArticleVendu article, Enchere enchere) throws Exception;
 
 	public ArticleVendu getInfosArticle(int id) throws Exception;
+	
+	public Enchere getInfosUserBestEnchereForArticle(int id) throws Exception;
+	
+	public Retrait getInfosRetraitForArticle(int id) throws Exception;
 
 }
