@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class Enchere {
 
-	private int id;
 	private Utilisateur idUser;
     private ArticleVendu idArticle;
     private LocalDate dateEnchere;
@@ -18,19 +17,10 @@ public class Enchere {
         this.montantEnchere = montantEnchere;
     }
     
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Enchere(Utilisateur idUser, int montantEnchere) {
+    	this.idUser = idUser;
+        this.montantEnchere = montantEnchere;
+    }
 
     public Utilisateur getIdUser() {
         return idUser;
@@ -67,8 +57,7 @@ public class Enchere {
     @Override
     public String toString() {
         return "Enchere{" +
-        		"id=" + id +
-                ", no_utilisateur=" + idUser +
+                "no_utilisateur=" + idUser +
                 ", no_article=" + idArticle +
                 ", date_enchere=" + dateEnchere +
                 ", montant_enchere=" + montantEnchere +
