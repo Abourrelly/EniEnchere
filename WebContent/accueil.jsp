@@ -27,15 +27,16 @@
 <script src="ressource/JS/accueil.js?v=202104091628"></script>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Eni-Enchères</a>
-
-    <div class="collapse navbar-collapse" id="navbarColor01">
-<%--        <ul class="navbar-nav ml-auto">--%>
-<%--            <li class="nav-item active">--%>
-<%--                <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter</a>--%>
-<%--            </li>--%>
-<%--        </ul>--%>
+    <div class="collapse navbar-collapse" id="connexion">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter</a>
+            </li>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="nav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Enchères</a>
@@ -60,14 +61,14 @@
         </div>
         <div class="d-flex col-sm-12 mt-5 align-items-center justify-content-center">
             <div class="col-sm-12">
-                <div class="card border-info" style="max-width: 100rem;">
+                <div class="card border-primary" style="max-width: 100rem;">
                     <div class="card-header">Filtres</div>
                     <div class="card-body">
                         <form class="form-inline col-sm-12 my-2 my-lg-0">
                             <div class="form-group col-sm-6">
                                 <label for="filtreMots">Par mot : </label>
                                 <input class="form-control ml-2" type="text" placeholder="Mots à filtrer..." name="filtreMots" id="filtreMots">
-                                <button class="btn btn-info" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
+                                <button class="btn btn-primary" type="submit"><img src="ressource/Icon/svg/funnel-hand-drawn-symbol.svg" height="24px" width="24px"></button>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="exampleSelect1">Par catégorie : </label>
@@ -136,7 +137,7 @@
                         </div>
                         <div class="row col-sm-12 mt-2">
                             <div class="col-sm-4"></div>
-                            <button type="button" class="btn btn-info btn-lg btn-block col-sm-4">Rechercher</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block col-sm-4">Rechercher</button>
                             <div class="col-sm-4"></div>
                         </div>
                     </div>

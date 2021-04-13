@@ -1,15 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-    <%
-        String id = request.getParameter("v1");
-        String fin = request.getParameter("v2");
-    %>
-</body>
-</html>
+<%@page import=""%>
+
+<jsp:useBean id="obj" class="org.eni.projetEnchere.dal.UserDAO"/>
+
+<jsp:setProperty name="obj" property="identifiant"/>
+<jsp:setProperty name="snr" property="password"/>
+<%
+    boolean status = UserDAO.validate(obj);
+
+    if(status){
+        System.out.println("Connexion réussie");;
+        session.setAttribute("session","TRUE");
+    }
+    else
+    {
+        System.out.println("Identifiant ou mot de passe erroné");
+%>
+<jsp:include page="../accueil.jsp"></jsp:include>
+<%
+    }
+%>

@@ -1,6 +1,6 @@
 package org.eni.projetEnchere.bo;
 
-public class Utilisateur {
+public class Utilisateur implements java.io.Serializable{
 
     private int id;
     private String pseudo;
