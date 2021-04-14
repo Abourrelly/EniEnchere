@@ -37,7 +37,7 @@ public class ServletConnexion extends HttpServlet {
 				if(session.getAttribute("connect") == null) {
 					connect = 1;
 					session.setAttribute("connect", connect);
-					session.setAttribute("no_utilisateur", id);
+					session.setAttribute("utilisateur", userManager.getInfosProfile(id));
 				}
 				RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
 		        rd.forward(request, response);
