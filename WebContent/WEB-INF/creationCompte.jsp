@@ -22,7 +22,7 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
 </nav>
 
@@ -42,8 +42,8 @@
                     <input type="text" class="form-control" id="telephone" name="telephone">
                     <label for="cp">Code postal</label>
                     <input type="text" class="form-control" id="cp" name="cp">
-                    <label for="exampleInputPassword1">Mot de passe</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" name="pass">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="pass">
                 </div>
             </form>
         </div>
@@ -58,18 +58,18 @@
                     <input type="text" class="form-control" id="rue" name="rue">
                     <label for="ville">Ville</label>
                     <input type="text" class="form-control" id="ville" name="ville">
-                    <label for="confirmEmail">Confirmation</label>
-                    <input type="email" class="form-control" id="confirmEmail" aria-describedby="emailHelp" name="confirmation">
+                    <label for="confirmPass">Confirmation</label>
+                    <input type="password" class="form-control" id="confirmPass" aria-describedby="emailHelp" name="confirmPass">
                 </div>
             </form>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6 mt-3 text-right">
-            <button class="submit btn btn-info">Créer</button>
+            <button class="submit btn btn-primary">Créer</button>
         </div>
         <div class="col-sm-6 mt-3 text-left">
-            <a href="<%=request.getContextPath() %>/connexion" class="btn btn-info">Annuler</a>
+            <a href="<%=request.getContextPath() %>/connexion" class="btn btn-primary">Annuler</a>
         </div>
     </div>
 </div>

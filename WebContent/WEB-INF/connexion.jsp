@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -17,6 +18,12 @@
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
 </head>
 <body>
 
@@ -24,27 +31,28 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
 </nav>
 <div class="row ml-5 mt-5">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
-        <form action="connexion" method="post">
+        <form action="<%=request.getContextPath() %>/connexion" method="post" id="loginForm">
             <div class="form-group">
                 <label for="identifiant">Identifiant :</label>
-                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant" value="<%= session.getAttribute("pseudo") %>"/>
+                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre email ou pseudo..." name="identifiant" />
             </div>
             <div class="form-group">
-                <label for="pass">Mot de passe :</label>
-                <input type="password" class="form-control" id="pass" placeholder="Renseignez votre mot de passe..." name="pass">
+                <label for="password">Mot de passe :</label>
+                <input type="password" class="form-control" id="password" placeholder="Renseignez votre mot de passe..." name="password" />
             </div>
+            <br>${message}
             <div class="form-group">
                 <div class="form-group mt-5">
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="form-check col-md-4">
-                                <input type="submit" class="btn btn-info" value="Connexion" />
+                                <input type="submit" class="btn btn-primary" value="Connexion" />
                             </div>
                         </div>
                         <div class="form-check disabled col-md-4">
@@ -59,7 +67,7 @@
                     </div>
                 </div>
                 <div class="mt-5 text-center">
-                    <a class="btn btn-info btn-lg" href="<%=request.getContextPath() %>/creation" role="button">Créer un compte</a>
+                    <a class="btn btn-primary btn-lg" href="<%=request.getContextPath() %>/creation" role="button">Créer un compte</a>
                 </div>
             </div>
         </form>
@@ -67,4 +75,29 @@
     <div class="col-lg-4"></div>
 </div>
 </body>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#loginForm").validate({
+            rules: {
+                identifiant: {
+                    required: true,
+                    identifiant: true
+                },
+
+                password: "Obligatoire",
+            },
+
+            messages: {
+                identifiant: {
+                    required: "Veuillez renseigner un identifiant",
+                    identifiant: "Cet identifiant n'est pas valide"
+                },
+
+                password: "Veuillez renseignez un mot de passe"
+            }
+        });
+
+    });
+</script>
 </html>
