@@ -8,19 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ServletsDeconnexion
+ * Servlet implementation class ServletAccueil
  */
-@WebServlet("/deconnexion")
-public class ServletsDeconnexion extends HttpServlet {
+@WebServlet("/accueil")
+public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletsDeconnexion() {
+    public ServletAccueil() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,10 +29,8 @@ public class ServletsDeconnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getSession().invalidate();
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/accueil");
-		dispatcher.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+        rd.forward(request, response);
 	}
 
 	/**
