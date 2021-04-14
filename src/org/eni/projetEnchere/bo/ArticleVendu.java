@@ -6,7 +6,6 @@ import java.util.List;
 
 public class ArticleVendu {
 
-	private int id;
     private int idArticle;
     private String nom;
     private String description;
@@ -31,25 +30,20 @@ public class ArticleVendu {
         this.prixVente = prixVente;
     }
     
+    public ArticleVendu(int idArticle, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente) {
+        this.idArticle = idArticle;
+    	this.nom = nom;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
+    }
+    
 //    public ArticleVendu(String nom_article, String description, String date_debut_encheres, String date_fin_encheres, int prix_initial, int prix_vente, List<Enchere> encheres) {
 //    	this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
 //    	this.encheres = encheres;
 //    }
-    
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public int getIdArticle() {
         return idArticle;
@@ -141,8 +135,7 @@ public class ArticleVendu {
     @Override
     public String toString() {
         return "ArticleVendu{" +
-        		"id=" + id +
-                ", idArticle=" + idArticle +
+                "idArticle=" + idArticle +
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", dateDebutEncheres='" + dateDebutEncheres + '\'' +
