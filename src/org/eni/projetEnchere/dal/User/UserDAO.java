@@ -24,7 +24,7 @@ public interface UserDAO {
 //    private int credit;
 //    private int administrateur;
 //
-	public int connect(String email, String motDePasse, boolean choice_requete) throws Exception;
+	public int connect(String input, String motDePasse, boolean choice_requete) throws Exception;
 
 //
 //	En tant qu’utilisateur,
