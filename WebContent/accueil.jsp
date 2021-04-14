@@ -42,7 +42,7 @@
                     <a class="nav-link" href="#">Vendre un article</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="<%=request.getContextPath() %>/voirProfil">Mon profil - <%=utilisateur.getNom()%></a>
+                    <a class="nav-link" href="<%=request.getContextPath() %>/profil?id=<%=utilisateur.getId()%>">Mon profil</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link pt-1" href="<%=request.getContextPath() %>/deconnexion"><img src="ressource/Icon/svg/power-symbol-variant-hand-drawn-outline.svg" height="24px" width="24px"></a>
