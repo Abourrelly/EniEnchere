@@ -20,7 +20,7 @@ public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        
+
 		String input = request.getParameter("identifiant");
 		String password = request.getParameter("password");
 
@@ -43,8 +43,8 @@ public class ServletConnexion extends HttpServlet {
 		        rd.forward(request, response);
 			} else {
 				String message = "Votre identifiant/mot de passe est erroné";
-//				RequestDispatcher rd = request.getRequestDispatcher("/connexion.jsp");
-//		        rd.forward(request, response);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
+		        rd.forward(request, response);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

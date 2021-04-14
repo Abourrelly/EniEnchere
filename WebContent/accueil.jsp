@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="org.eni.projetEnchere.bo.Utilisateur" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -29,29 +30,35 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Eni-Enchères</a>
-    <div class="collapse navbar-collapse" id="connexion">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter</a>
-            </li>
-        </ul>
-    </div>
-    <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Enchères</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Vendre un article</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="<%=request.getContextPath() %>/voirProfil">Mon profil</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link pt-1" href="<%=request.getContextPath() %>/deconnexion"><img src="ressource/Icon/svg/power-symbol-variant-hand-drawn-outline.svg" height="24px" width="24px"></a>
-            </li>
-        </ul>
-    </div>
+    <% Utilisateur utilisateur = (Utilisateur) request.getAttribute("utilisateur"); %>
+    <% if(utilisateur != null) { %>
+        <!-- Connecté -->
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Enchères</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Vendre un article</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="<%=request.getContextPath() %>/voirProfil">Mon profil</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link pt-1" href="<%=request.getContextPath() %>/deconnexion"><img src="ressource/Icon/svg/power-symbol-variant-hand-drawn-outline.svg" height="24px" width="24px"></a>
+                </li>
+            </ul>
+        </div>
+    <% } else { %>
+        <!-- Pas connecté -->
+        <div class="collapse navbar-collapse" id="connexion">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="<%=request.getContextPath() %>/connexion">S'inscrire - Se connecter</a>
+                </li>
+            </ul>
+        </div>
+    <% } %>
 </nav>
 
 <div class="container">

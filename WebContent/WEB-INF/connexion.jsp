@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -36,14 +37,14 @@
 <div class="row ml-5 mt-5">
     <div class="col-lg-4"></div>
     <div class="col-lg-4">
-        <form action="authentification.jsp" method="post">
+        <form action="<%=request.getContextPath() %>/connexion" method="post" id="loginForm">
             <div class="form-group">
                 <label for="identifiant">Identifiant :</label>
-                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre identifiant..." name="identifiant" value="<%= session.getAttribute("identifiant") %>"/>
+                <input type="text" class="form-control" id="identifiant" placeholder="Renseignez votre email ou pseudo..." name="identifiant" />
             </div>
             <div class="form-group">
                 <label for="password">Mot de passe :</label>
-                <input type="password" class="form-control" id="password" placeholder="Renseignez votre mot de passe..." name="password" value="<%= session.getAttribute("password") %>"/>
+                <input type="password" class="form-control" id="password" placeholder="Renseignez votre mot de passe..." name="password" />
             </div>
             <br>${message}
             <div class="form-group">
@@ -79,18 +80,18 @@
     $(document).ready(function() {
         $("#loginForm").validate({
             rules: {
-                email: {
+                identifiant: {
                     required: true,
-                    email: true
+                    identifiant: true
                 },
 
                 password: "Obligatoire",
             },
 
             messages: {
-                email: {
+                identifiant: {
                     required: "Veuillez renseigner un identifiant",
-                    email: "Cet identifiant n'est pas valide"
+                    identifiant: "Cet identifiant n'est pas valide"
                 },
 
                 password: "Veuillez renseignez un mot de passe"

@@ -83,7 +83,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 			        
 			        if(passwordEncrypt.equals(passwordInDb)) {
 			        	// password correct
-			        	int id = rs.getInt("id");
+			        	int id = rs.getInt("no_utilisateur");
 			        	return id;
 			        	
 			        } else {

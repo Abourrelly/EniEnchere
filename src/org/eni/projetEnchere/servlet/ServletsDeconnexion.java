@@ -34,9 +34,9 @@ public class ServletsDeconnexion extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			session.removeAttribute("user");
+			session.removeAttribute("utilisateur");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("accueil.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
