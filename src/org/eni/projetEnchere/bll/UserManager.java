@@ -67,7 +67,7 @@ public class UserManager {
 		// TODO Auto-generated method stub
 		try {
 			boolean choiceRequete = false;
-			// si le pseudo n'est pas null et que c'est caractere soit tous alphanumerique
+			// si le pseudo n'est pas null et que ses caracteres sont tous alphanumerique
 			if(input != null){ // "\\p{Alpha}+"  // "\\p{Alnum}"
 				
 				if(input.contains("@")) {
@@ -87,7 +87,7 @@ public class UserManager {
 					return id;
 
 				} else {
-					// connexion refuser
+					// connexion refusée
 					return 0;
 					
 				}
