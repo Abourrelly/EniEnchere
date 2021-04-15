@@ -3,6 +3,7 @@
  */
 package org.eni.projetEnchere.dal.User;
 
+import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Utilisateur;
 
 /**
@@ -42,6 +43,6 @@ public interface UserDAO {
 
 	void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception;
 
-	void deleteUser(int id) throws Exception;
+	void deleteUser(int id, ArticleVendu article) throws Exception;
 	
 }

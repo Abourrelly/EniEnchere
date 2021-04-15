@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.eni.projetEnchere.bo.ArticleVendu;
+import org.eni.projetEnchere.bo.Enchere;
 import org.eni.projetEnchere.bo.Utilisateur;
 import org.eni.projetEnchere.dal.ConnectionProvider;
 
@@ -47,6 +49,13 @@ public class UserDaoJDBCImpl implements UserDAO {
 	private static final String UPDATE_USER = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 
 	private static final String UPDATE_USER_EMPTY_MDP = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ? WHERE no_utilisateur = ?";
+	
+	
+	private static final String SELECT_ENCHERE_BY_ID_USER = "SELECT no_article, no_utilisateur FROM ENCHERE_GRP1.ENCHERES WHERE no_utilisateur = ?";
+	
+	private static final String DELETE_ENCHERE = "DELETE FROM ENCHERE_GRP1.ENCHERES WHERE no_utilisateur = ?";
+	
+	private static final String DELETE_ARTICLE = "DELETE FROM ENCHERE_GRP1.ARTICLE_VENDUS WHERE no_article AND no_utilisateur = ?";
 	
 	private static final String DELETE_USER = "DELETE FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
 	
@@ -252,13 +261,60 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 	
 	@Override
-	public void deleteUser(int id) {
+	public void deleteUser(int id, ArticleVendu article) {
 		
+		int idArticle = 0;
+		
+//		boolean condition_enchere = false;
+//		boolean condition_article = false;
+		
+		if(article != null) {
+			
+			idArticle = article.getIdArticle();
+			
+		}
+		
+		System.out.println(id);
+		
+		System.out.println(idArticle);
+		
+
+//		private static final String SELECT_ENCHERE_BY_ID_USER = "SELECT no_article, no_utilisateur FROM ENCHERE_GRP1.UTILISATEURS WHERE no_article = ? AND no_utilisateur = ?";
+//		
+//		private static final String DELETE_USER = "DELETE FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
+//		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pStmtEnchere = cnx.prepareStatement(SELECT_ENCHERE_BY_ID_USER);
+			pStmtEnchere.setInt(1, id);
+			
+			ResultSet rsEnchere = pStmtEnchere.executeQuery();
+			
+			if (rsEnchere.next()) {
+				// resultat pas vide
+				PreparedStatement pStmt = cnx.prepareStatement(DELETE_ENCHERE);
+				pStmt.setInt(1, id);
+//				
+				pStmt.executeUpdate();
+				
+			} else {
+//				Resultat vide
+			}
+			
+			if(article != null) {
+				
+				// resultat pas vide
+				PreparedStatement pStmt = cnx.prepareStatement(DELETE_ARTICLE);
+				pStmt.setInt(1, idArticle);
+				pStmt.setInt(2, id);
+//				
+				pStmt.executeUpdate();
+				
+			}
 			
 			PreparedStatement pStmt = cnx.prepareStatement(DELETE_USER);
 			pStmt.setInt(1, id);
-			
+
 			pStmt.executeUpdate();
 			
 		} catch (SQLException e) {
