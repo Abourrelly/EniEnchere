@@ -3,7 +3,9 @@
  */
 package org.eni.projetEnchere.bll;
 
+import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Utilisateur;
+import org.eni.projetEnchere.dal.Article.ArticleDAO;
 import org.eni.projetEnchere.dal.User.DAOFactory;
 import org.eni.projetEnchere.dal.User.UserDALException;
 import org.eni.projetEnchere.dal.User.UserDAO;
@@ -122,7 +124,12 @@ public class UserManager {
 	
 	public void deleteUser(int id) throws Exception {
 		//TODO : gestion des erreurs
-		userDao.deleteUser(id);
+		
+		ArticleManager articleManager = new ArticleManager();
+		
+		ArticleVendu article = articleManager.selectByIdUser(id); 
+		
+		userDao.deleteUser(id, article);
 	
 	}
 	

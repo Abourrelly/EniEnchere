@@ -30,5 +30,7 @@ public interface ArticleDAO {
 	public Enchere getInfosUserBestEnchereForArticle(int id) throws Exception;
 	
 	public Retrait getInfosRetraitForArticle(int id) throws Exception;
+	
+	public ArticleVendu selectByIdUser(int id) throws Exception;
 
 }

@@ -32,7 +32,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	private static final String INSERT_RETRAIT = "INSERT INTO ENCHERE_GRP1.RETRAITS(no_article, rue, code_postal, ville) VALUES(?, ?, ?, ?)";
 
-	
+
 	private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS";
 
 	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDU"; // WHERE no_utilisateur = ?
@@ -65,6 +65,8 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	private static final String SELECT_RETRAIT_BY_ID_ARTICLE = "SELECT no_article, rue, code_postal, ville FROM ENCHERE_GRP1.RETRAITS WHERE no_article = ?";
 	
+	private static final String SELECT_ARTICLE_BY_ID_USER = "SELECT no_article, no_utilisateur FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";
+
 	@Override
 	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
@@ -391,6 +393,35 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		return retrait;
 	}
 	
+
+	@Override
+	public ArticleVendu selectByIdUser(int id) throws Exception {
+		// TODO Auto-generated method stub
+		ArticleVendu articleVendu = null;
+
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pStmtArticle = cnx.prepareStatement(SELECT_ARTICLE_BY_ID_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			pStmtArticle.setInt(1, id);
+
+			ResultSet rsArticle = pStmtArticle.executeQuery();
+
+			if(rsArticle.next()){
+
+				articleVendu = new ArticleVendu();
+				articleVendu.setIdArticle(rsArticle.getInt("no_article"));
+
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(articleVendu);
+
+		return articleVendu;
+	}
+
 	private String nowDate() {
 		
 		Date now = new Date();
