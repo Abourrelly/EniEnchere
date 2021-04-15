@@ -42,7 +42,7 @@
         <div class="collapse navbar-collapse" id="nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Enchères</a>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/creationEnchere">Enchères</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Vendre un article</a>
