@@ -15,59 +15,67 @@
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="ressource/css/voirProfil.css">
 </head>
 <body>
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="<%= request.getContextPath()%>/accueil">Eni-Enchères</a>
-</nav>
+<jsp:include page="/navbar.jsp" />
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 mt-5">
             <h2 class="text-center">Profil de ${profil.pseudo}</h2>
         </div>
-        <div class="col-sm-12 card border-primary mb-3 mt-5" style="max-width: 30rem;">
-            <div class="card-header text-center">Détail du profil</div>
-            <div class="card-body mx-auto">
-                <h4 class="card-title text-center">${profil.pseudo}</h4>
-                <div class="col-sm-12 mt-5">
-                    <div class="form-group row">
-                        <label for="nom" class="col-sm-4 col-form-label">Nom : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="nom" name="nom" value="${profil.nom}">
+        <div class="col-xl-6 col-md-12">
+                <div class="card user-card-full">
+                    <div class="row m-l-0 m-r-0">
+                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                            <div class="card-block text-center text-white">
+                                <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image"> </div>
+                                <h6 class="f-w-600"><%= user.getPrenom() +" "+user.getNom() %></h6>
+                            </div>
                         </div>
-                        <label for="prenom" class="col-sm-4 col-form-label">Prénom : </label>
                         <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="prenom" name="prenom" value="${profil.prenom}">
-                        </div>
-                        <label for="staticEmail" class="col-sm-4 col-form-label">Email : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" name="email" value="${profil.email}">
-                        </div>
-                        <label for="telephone" class="col-sm-4 col-form-label">Téléphone : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="telephone" name="telephone" value="${profil.telephone}">
-                        </div>
-                        <label for="rue" class="col-sm-4 col-form-label">Rue : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="rue" name="rue" value="${profil.rue}">
-                        </div>
-                        <label for="cp" class="col-sm-4 col-form-label">Code postal : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="cp" name="cp" value="${profil.codePostal}">
-                        </div>
-                        <label for="ville" class="col-sm-4 col-form-label">Ville : </label>
-                        <div class="col-sm-8">
-                            <input type="text" readonly="" class="form-control-plaintext" id="ville" name="ville" value="${profil.ville}">
+                            <div class="card-block">
+                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                <div class="row">
+                                	<div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">Pseudo</p>
+                                        <h6 class="text-muted f-w-400"><%=user.getPseudo() %></h6>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">Email</p>
+                                        <h6 class="small text-muted f-w-400"><%= user.getEmail() %></h6>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="m-b-10 f-w-600">Phone</p>
+                                        <h6 class="text-muted f-w-400"><%=user.getTelephone() %></h6>
+                                    </div>
+                                </div>
+                                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Recent</p>
+                                        <h6 class="text-muted f-w-400">Sam Disuja</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Most Viewed</p>
+                                        <h6 class="text-muted f-w-400">Dinoter husainm</h6>
+                                    </div>
+                                </div>
+                                <ul class="social-link list-unstyled m-t-40 m-b-10">
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         <% if((user != null) && (user.getId() == profil.getId())) { %>
         <div class="col-sm-12 mt-3 text-center">
             <button class="submit btn btn-primary">Modifier</button>
@@ -75,6 +83,5 @@
         <% } %>
     </div>
 </div>
-
 </body>
 </html>

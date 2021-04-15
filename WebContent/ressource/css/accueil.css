@@ -1,0 +1,67 @@
+.newIcon::before {
+    font-size: 50px !important;
+}
+
+#buttonSearch{
+	margin: 0;
+	position: absolute;
+	top: 50%;
+  	-ms-transform: translateX(100%);
+  	    transform: translateX(100%);
+}
+
+.img-card-shop {
+    width: 350px;
+    height: 350px;
+    max-height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.iconImg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#greenCut{
+    position: absolute;
+    top: 20%;
+    width: 20%;
+    height: auto;
+
+}
+
+#treeCut{
+    position: absolute;
+    top: 50%;
+    right:0%;
+    width: 20%;
+    height: auto;
+
+}
+
+@media (max-width: 1750px) {
+  #greenCut, #treeCut {
+    width: 15%;
+  }
+}
+
+@media (max-width: 1500px) {
+  #greenCut, #treeCut {
+    width: 10%;
+  }
+}
+
+@media (max-width: 1350px) {
+  #greenCut, #treeCut {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+	#buttonSearch{
+	-ms-transform: translateX(0%);
+  	    transform: translateX(0%);
+	}
+}
