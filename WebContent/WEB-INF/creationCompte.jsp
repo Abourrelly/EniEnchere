@@ -23,7 +23,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
+    <a class="navbar-brand" href="<%= request.getContextPath()%>/accueil">Eni-Enchères</a>
 </nav>
 
 <div class="container">
