@@ -47,16 +47,17 @@ public class ServletCreationCompte extends HttpServlet {
 		String email = request.getParameter("email");
 		String telephone = request.getParameter("telephone");
 		String rue = request.getParameter("rue");
-		String code_postal = request.getParameter("code_postal");
+		String codePostal = request.getParameter("cp");
 		String ville = request.getParameter("ville");
-		String mot_de_passe = request.getParameter("mot_de_passe");
+		String motDePasse = request.getParameter("newPassword");
+		String confirmPass = request.getParameter("confirmPass");
 		
 		UserManager userManager = new UserManager();
 		
 		try {
 						
 			//Utilisateur user = 
-			userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
+			userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, 0);
 		
 			// recuperation de la session
 			HttpSession session = request.getSession();
