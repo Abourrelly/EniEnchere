@@ -34,7 +34,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	
 	//private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS";// WHERE date_debut_encheres >= ? AND date_fin_encheres <= ?";
 
-	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDU"; // WHERE no_utilisateur = ?                            
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDU"; // WHERE no_utilisateur = ?
 	// _USER_CONNECT
 	
 	

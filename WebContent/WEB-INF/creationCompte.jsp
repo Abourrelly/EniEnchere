@@ -43,7 +43,7 @@
                     <label for="cp">Code postal</label>
                     <input type="text" class="form-control" id="cp" name="cp">
                     <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="pass">
+                    <input type="password" class="form-control" id="password" name="password">
                 </div>
             </form>
         </div>

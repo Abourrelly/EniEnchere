@@ -34,7 +34,7 @@ public class test {
 		
 		UserManager userManager = new UserManager();
 		
-		Utilisateur user = userManager.getInfosProfile(22);
+		//Utilisateur user = userManager.getInfosProfile(22);
 		
 		//Date now = new Date();
 //		
@@ -54,7 +54,7 @@ public class test {
 //		2 = non commencées, 
 //		3 = en-cours 
 //		4 = terminées
-//		System.out.println(articleManager.get_all_article_user_connect(17, 4));
+//		System.out.println(articleManager.getAllArticleUserConnect());
 		
 		//articleManager.sendPayement(user, 27, 1, 100, 110);
 		
