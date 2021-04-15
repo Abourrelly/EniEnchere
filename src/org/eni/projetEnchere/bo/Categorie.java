@@ -3,7 +3,6 @@ package org.eni.projetEnchere.bo;
 public class Categorie {
 
 	private int id;
-    private int idCategorie;
 	private String libelle;
 
     public Categorie() {
@@ -27,14 +26,11 @@ public class Categorie {
         this.libelle = libelle;
     }
 
-    public int getIdCategorie() {
-        return idCategorie;
-    }
-
-    public void setIdCategorie(int idCategorie) {
-        this.idCategorie = idCategorie;
-    }
-
+    public Categorie(int id, String libelle) {
+		setId(id);
+		setLibelle(libelle);
+	}
+    
     public String getLibelle() {
         return libelle;
     }
@@ -47,7 +43,6 @@ public class Categorie {
     public String toString() {
         return "Categorie{" +
         		"id=" + id +
-        		", idCategorie=" + idCategorie +
                 ", libelle='" + libelle + '\'' +
                 '}';
     }

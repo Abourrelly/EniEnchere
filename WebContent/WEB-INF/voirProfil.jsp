@@ -69,7 +69,7 @@
             </div>
         </div>
         <% if(user.getId() == profil.getId()) { %>
-        <div class="col-sm-6 mt-3 text-center">
+        <div class="col-sm-12 mt-3 text-center">
             <button class="submit btn btn-primary">Modifier</button>
         </div>
         <% } %>
