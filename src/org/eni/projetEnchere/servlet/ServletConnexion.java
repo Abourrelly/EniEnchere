@@ -3,11 +3,8 @@ package org.eni.projetEnchere.servlet;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.eni.projetEnchere.bll.UserManager;
@@ -39,7 +36,7 @@ public class ServletConnexion extends HttpServlet {
 					session.setAttribute("connect", connect);
 					session.setAttribute("utilisateur", userManager.getInfosProfile(id));
 				}
-				RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/accueil");
 		        rd.forward(request, response);
 			} else {
 				String message = "Votre identifiant/mot de passe est erroné";

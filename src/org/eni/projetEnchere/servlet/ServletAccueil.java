@@ -15,7 +15,7 @@ import org.eni.projetEnchere.bo.ArticleVendu;
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/accueil")
+
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
