@@ -22,7 +22,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
+    <a class="navbar-brand" href="<%= request.getContextPath()%>/accueil">Eni-Enchères</a>
 </nav>
 
 <div class="container">
@@ -68,8 +68,8 @@
                 </div>
             </div>
         </div>
-        <% if(user.getId() == profil.getId()) { %>
-        <div class="col-sm-6 mt-3 text-center">
+        <% if((user != null) && (user.getId() == profil.getId())) { %>
+        <div class="col-sm-12 mt-3 text-center">
             <button class="submit btn btn-primary">Modifier</button>
         </div>
         <% } %>

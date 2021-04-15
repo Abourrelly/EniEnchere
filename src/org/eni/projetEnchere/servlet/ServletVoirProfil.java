@@ -28,9 +28,6 @@ public class ServletVoirProfil extends HttpServlet {
 			Utilisateur profil = new UserManager().getInfosProfile(Integer.parseInt(request.getParameter("id")));
 			request.setAttribute("profil", profil);
 			
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -13,8 +13,8 @@ public class ArticleVendu {
     private String dateFinEncheres;
     private int prixInitial;
     private int prixVente;
-    private Utilisateur idUser;
-    private Categorie idCategorie;
+    private Utilisateur utilisateur;
+    private Categorie categorie;
     
 //    private List<Enchere> encheres;
 
@@ -44,6 +44,18 @@ public class ArticleVendu {
 //    	this(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente);
 //    	this.encheres = encheres;
 //    }
+
+	public ArticleVendu(int idArticle, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, Categorie categorie, Utilisateur utilisateur) {
+        this.idArticle = idArticle;
+    	this.nom = nom;
+        this.description = description;
+        this.dateDebutEncheres = dateDebutEncheres;
+        this.dateFinEncheres = dateFinEncheres;
+        this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
+        this.categorie = categorie;
+        this.utilisateur = utilisateur;
+    }
 
 	public int getIdArticle() {
         return idArticle;
@@ -101,20 +113,20 @@ public class ArticleVendu {
         this.prixVente = prixVente;
     }
 
-    public Utilisateur getIdUser() {
-        return idUser;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setIdUser(Utilisateur idUser) {
-        this.idUser = idUser;
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
-    public Categorie getIdCategorie() {
-        return idCategorie;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setIdCategorie(Categorie idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
     
 //	public List<Enchere> getEncheres() {
@@ -142,8 +154,8 @@ public class ArticleVendu {
                 ", dateFinEncheres='" + dateFinEncheres + '\'' +
                 ", prixInitial=" + prixInitial +
                 ", prixVente=" + prixVente +
-                ", idUser=" + idUser +
-                ", idCategorie=" + idCategorie +
+                ", utilisateur=" + utilisateur +
+                ", categorie=" + categorie +
 //                ", encheres=" + encheres +
                 '}';
     }

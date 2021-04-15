@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.eni.projetEnchere.bll.CategorieManager;
 import org.eni.projetEnchere.bll.UserManager;
 import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Categorie;
@@ -138,11 +139,11 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 				articleVendu.setIdArticle(rs.getInt("no_article"));
 				Utilisateur user = new Utilisateur(); 
 				user.setId(rs.getInt("no_utilisateur"));
-				articleVendu.setIdUser(user);
+				articleVendu.setUtilisateur(user);
 				
 				Categorie categorie = new Categorie(); 
-				categorie.setIdCategorie(rs.getInt("no_categorie"));
-				articleVendu.setIdCategorie(categorie);
+				categorie.setId(rs.getInt("no_categorie"));
+				articleVendu.setCategorie(categorie);
 				
 				result.add(articleVendu);
 			
@@ -176,11 +177,11 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 				articleVendu.setIdArticle(rs.getInt("no_article"));
 				Utilisateur user = new Utilisateur(); 
 				user.setId(rs.getInt("no_utilisateur"));
-				articleVendu.setIdUser(user);
+				articleVendu.setUtilisateur(user);
 				
 				Categorie categorie = new Categorie(); 
-				categorie.setIdCategorie(rs.getInt("no_categorie"));
-				articleVendu.setIdCategorie(categorie);
+				categorie.setId(rs.getInt("no_categorie"));
+				articleVendu.setCategorie(categorie);
 				
 				result.add(articleVendu);
 			
@@ -429,8 +430,20 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		String dateFinEncheres = rs.getString("date_fin_encheres");
 		int prixInitial = rs.getInt("prix_initial");
 		int prixVente = rs.getInt("prix_vente");
+		Utilisateur utilisateur = null;
+		try {
+			 utilisateur = new UserManager().getInfosProfile(rs.getInt("no_utilisateur"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Categorie categorie = null;
+		try {
+			 categorie = new CategorieManager().getById(rs.getInt("no_categorie"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 				
-		return new ArticleVendu(idArticle, nom, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente);
+		return new ArticleVendu(idArticle, nom, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, categorie, utilisateur); 
 	
 	}
 	
