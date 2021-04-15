@@ -1,6 +1,7 @@
 package org.eni.projetEnchere.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +33,9 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArticleVendu article;
+		List<ArticleVendu> article;
 		try {
-			article = new ArticleManager().getInfosArticle(27);
+			article = new ArticleManager().getAllArticleUserDisconnect();
 			request.setAttribute("article", article);
 		} catch (Exception e) {
 			e.printStackTrace();

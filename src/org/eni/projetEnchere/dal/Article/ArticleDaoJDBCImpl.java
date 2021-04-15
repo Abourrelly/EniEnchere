@@ -33,7 +33,11 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	private static final String INSERT_RETRAIT = "INSERT INTO ENCHERE_GRP1.RETRAITS(no_article, rue, code_postal, ville) VALUES(?, ?, ?, ?)";
 
 	
-	//private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS";// WHERE date_debut_encheres >= ? AND date_fin_encheres <= ?";
+
+	private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS";
+
+	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";                            
+
 
 	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDU"; // WHERE no_utilisateur = ?
 	// _USER_CONNECT
@@ -161,34 +165,17 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	@Override
 	public List<ArticleVendu> getAllArticleUserDisconnect() throws Exception {
+//		String nowFormatString = nowDate();
 		// TODO Auto-generated method stub
-		String nowFormatString = nowDate();
-		
-		List<ArticleVendu> result = new ArrayList<ArticleVendu>();
-		
+		List<ArticleVendu> result = new  ArrayList<>();
 		try(Connection cnx = ConnectionProvider.getConnection()) {
-			
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
-			
-			pStmt.setDate(1, java.sql.Date.valueOf(nowFormatString));
-			pStmt.setDate(2, java.sql.Date.valueOf(nowFormatString));
-			
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_ARTICLE_USER_DISCONNECT);
+//			pStmt.setDate(1, java.sql.Date.valueOf(nowFormatString));
+//			pStmt.setDate(2, java.sql.Date.valueOf(nowFormatString));
 			ResultSet rs = pStmt.executeQuery();
 			while(rs.next()) {
-				ArticleVendu articleVendu = new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), rs.getString("date_debut_encheres"), rs.getString("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"));
-				articleVendu.setIdArticle(rs.getInt("no_article"));
-				Utilisateur user = new Utilisateur(); 
-				user.setId(rs.getInt("no_utilisateur"));
-				articleVendu.setUtilisateur(user);
-				
-				Categorie categorie = new Categorie(); 
-				categorie.setId(rs.getInt("no_categorie"));
-				articleVendu.setCategorie(categorie);
-				
-				result.add(articleVendu);
-			
+				result.add(mapArticle(rs));
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -462,11 +449,13 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		int prixInitial = rs.getInt("prix_initial");
 		int prixVente = rs.getInt("prix_vente");
 		Utilisateur utilisateur = null;
+		
 		try {
 			 utilisateur = new UserManager().getInfosProfile(rs.getInt("no_utilisateur"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		Categorie categorie = null;
 		try {
 			 categorie = new CategorieManager().getById(rs.getInt("no_categorie"));
