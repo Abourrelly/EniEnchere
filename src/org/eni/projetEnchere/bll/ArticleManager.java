@@ -132,4 +132,10 @@ public class ArticleManager {
 		
 	}
 	
+	public ArticleVendu selectByIdUser(int id) throws Exception{
+		
+		return articleDao.selectByIdUser(id);
+		
+	}
+	
 }

@@ -26,7 +26,11 @@ public class test {
 		
 		UserManager userManager = new UserManager();
 		
-		System.out.println(userManager.connect("ss@s.c", "123456789"));
+		//System.out.println(userManager.connect("ss@s.c", "123456789"));
+		
+		//System.out.println(userManager.deleteUser(23));
+		
+		//userManager.deleteUser(22);
 		
 		//userManager.deleteUser(16);
 				

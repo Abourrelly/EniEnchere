@@ -22,12 +22,12 @@
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	    <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
+	    <a class="navbar-brand" href="<%=request.getContextPath() %>/accueil">Eni-Enchères</a>
 	</nav>
 
 	<div class="">
         <div class="col-sm-12 mt-5">
-            <h2 class="text-center">Mofidier mon profile</h2>
+            <h2 class="text-center">Modifier mon profile</h2>
         </div>
         <form action="<%=request.getContextPath() %>/modifierCompte" class="d-flex justify-content-center flex-wrap w-75 m-auto" method="POST">
 	        <div class="col-sm-6">
@@ -73,7 +73,7 @@
 	        
 	        	<input type="submit" class="btn btn-primary" value="EN?VOYER" />
 	        	
-	        	<a href="<%=request.getContextPath() %>/suppresion" class="btn btn-primary" />SUPPRIMER MON COMPTE</a>
+	        	<a href="<%=request.getContextPath() %>/suppresion" class="btn btn-primary" >SUPPRIMER MON COMPTE</a>
 	        	
 	        </div>
 	        

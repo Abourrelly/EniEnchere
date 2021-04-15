@@ -65,6 +65,8 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	private static final String SELECT_RETRAIT_BY_ID_ARTICLE = "SELECT no_article, rue, code_postal, ville FROM ENCHERE_GRP1.RETRAITS WHERE no_article = ?";
 	
+	private static final String SELECT_ARTICLE_BY_ID_USER = "SELECT no_article, no_utilisateur FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";
+	
 	@Override
 	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
@@ -406,6 +408,35 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		System.out.println(retrait);
 		
 		return retrait;
+	}
+	
+
+	@Override
+	public ArticleVendu selectByIdUser(int id) throws Exception {
+		// TODO Auto-generated method stub
+		ArticleVendu articleVendu = null;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+		
+			PreparedStatement pStmtArticle = cnx.prepareStatement(SELECT_ARTICLE_BY_ID_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			pStmtArticle.setInt(1, id);
+			
+			ResultSet rsArticle = pStmtArticle.executeQuery();
+			
+			if(rsArticle.next()){
+				
+				articleVendu = new ArticleVendu();
+				articleVendu.setIdArticle(rsArticle.getInt("no_article"));
+			
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(articleVendu);
+		
+		return articleVendu;
 	}
 	
 	private String nowDate() {

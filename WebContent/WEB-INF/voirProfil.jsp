@@ -70,7 +70,7 @@
         </div>
         <% if((user != null) && (user.getId() == profil.getId())) { %>
         <div class="col-sm-12 mt-3 text-center">
-            <button class="submit btn btn-primary">Modifier</button>
+            <a class="submit btn btn-primary" href="<%= request.getContextPath()%>/modifierCompte">Modifier</a>
         </div>
         <% } %>
     </div>
