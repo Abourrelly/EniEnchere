@@ -30,6 +30,7 @@
     <link href="ressource/css/accueil.css" rel="stylesheet">
 </head>
 <body>
+
 <jsp:include page="/navbar.jsp"/>
 <img id="greenCut" src="ressource/img/greenCut.png"/>
 <img id="treeCut" src="ressource/img/tree.png"/>

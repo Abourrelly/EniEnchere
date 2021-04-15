@@ -84,9 +84,9 @@ public class ArticleManager {
 	}
 	
 	
-	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception {
+	public List<ArticleVendu> getAllArticleUserConnect() throws Exception { //int id
 		
-		listeArticleVendu.addAll(articleDao.getAllArticleUserConnect(id));
+		listeArticleVendu.addAll(articleDao.getAllArticleUserConnect()); //id
 		return listeArticleVendu;
 		
 	}
@@ -129,6 +129,12 @@ public class ArticleManager {
 	public Retrait getInfosRetraitForArticle(int id) throws Exception{
 		
 		return articleDao.getInfosRetraitForArticle(id);
+		
+	}
+	
+	public ArticleVendu selectByIdUser(int id) throws Exception{
+		
+		return articleDao.selectByIdUser(id);
 		
 	}
 	

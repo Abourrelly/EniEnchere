@@ -3,8 +3,11 @@
  */
 package org.eni.projetEnchere.bll;
 
+import org.eni.projetEnchere.bo.ArticleVendu;
 import org.eni.projetEnchere.bo.Utilisateur;
+import org.eni.projetEnchere.dal.Article.ArticleDAO;
 import org.eni.projetEnchere.dal.User.DAOFactory;
+import org.eni.projetEnchere.dal.User.UserDALException;
 import org.eni.projetEnchere.dal.User.UserDAO;
 
 /**
@@ -63,7 +66,7 @@ public class UserManager {
 				
 	}
 
-	public int connect(String input, String password) {
+	public int connect(String input, String password) throws UserDALException {
 		// TODO Auto-generated method stub
 		try {
 			boolean choiceRequete = false;
@@ -79,7 +82,6 @@ public class UserManager {
 					choiceRequete = false;
 				}
 				
-				//Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, 0, 0);
 				int id = userDao.connect(input, password, choiceRequete);
 				
 				if(id != 0) {
@@ -88,7 +90,9 @@ public class UserManager {
 
 				} else {
 					// connexion refusée
-					return 0;
+					
+					//throw new UserDALException("Nous ne trouvons personne avec c'est identifiant !");
+					//return 0;
 					
 				}
 				
@@ -97,6 +101,8 @@ public class UserManager {
 		} catch(Exception e) {
 			
 			e.printStackTrace();
+			//System.out.println(e.getMessage());
+			//throw new UserDALException("Nous ne trouvons personne avec c'est identifiant !");
 			
 		}
 		
@@ -118,7 +124,12 @@ public class UserManager {
 	
 	public void deleteUser(int id) throws Exception {
 		//TODO : gestion des erreurs
-		userDao.deleteUser(id);
+		
+		ArticleManager articleManager = new ArticleManager();
+		
+		ArticleVendu article = articleManager.selectByIdUser(id); 
+		
+		userDao.deleteUser(id, article);
 	
 	}
 	

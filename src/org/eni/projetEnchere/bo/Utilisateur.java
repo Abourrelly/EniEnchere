@@ -153,7 +153,7 @@ public class Utilisateur implements java.io.Serializable{
                 ", email='" + email + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", rue='" + rue + '\'' +
-                ", code_postal='" + codePostal + '\'' +
+                ", codePostal='" + codePostal + '\'' +
                 ", ville='" + ville + '\'' +
                 ", motDePasse='" + motDePasse + '\'' +
                 ", credit=" + credit +
