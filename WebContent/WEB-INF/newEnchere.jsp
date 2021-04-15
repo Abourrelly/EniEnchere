@@ -18,7 +18,7 @@
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="ressource/JS/newEnchere.js?v=2002104091106"></script>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-info">
-		<a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
+		<a class="navbar-brand" href="<%= request.getContextPath()%>/accueil">Eni-Enchères</a>
 	</nav>
 
 	<div class="container">

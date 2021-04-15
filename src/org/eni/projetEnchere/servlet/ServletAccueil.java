@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eni.projetEnchere.bll.ArticleManager;
+import org.eni.projetEnchere.bo.ArticleVendu;
+
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/accueil")
+
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,7 +31,15 @@ public class ServletAccueil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		ArticleVendu article;
+		try {
+			article = new ArticleManager().getInfosArticle(27);
+			request.setAttribute("article", article);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
         rd.forward(request, response);
 	}

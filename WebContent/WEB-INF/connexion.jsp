@@ -32,7 +32,7 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="accueil.jsp">Eni-Enchères</a>
+    <a class="navbar-brand" href="<%= request.getContextPath()%>/accueil">Eni-Enchères</a>
 </nav>
 <div class="row ml-5 mt-5">
     <div class="col-lg-4"></div>
@@ -50,9 +50,9 @@
             <div class="form-group">
                 <div class="form-group mt-5">
                     <div class="row">
-                        <div class="col-lg-8">
-                            <div class="form-check col-md-4">
-                                <input type="submit" class="btn btn-primary" value="Connexion" />
+                        <div class="col-sm-8 m-auto">
+                            <div class="form-check col-sm-8">
+                                <a class="text-secondary" href="<%=request.getContextPath() %>/creation">Créer un compte</a>
                             </div>
                         </div>
                         <div class="form-check disabled col-md-4">
@@ -66,8 +66,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-5 text-center">
-                    <a class="btn btn-primary btn-lg" href="<%=request.getContextPath() %>/creation" role="button">Créer un compte</a>
+                <div class="form-check mt-5 text-center">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Connexion" />
                 </div>
             </div>
         </form>
