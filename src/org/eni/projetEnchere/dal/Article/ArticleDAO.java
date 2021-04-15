@@ -19,7 +19,7 @@ public interface ArticleDAO {
 
 	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception;
 	
-	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception;
+	public List<ArticleVendu> getAllArticleUserConnect() throws Exception; //int id
 
 	public List<ArticleVendu> getAllArticleUserDisconnect() throws Exception;
 	

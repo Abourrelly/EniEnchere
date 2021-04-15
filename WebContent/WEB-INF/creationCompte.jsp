@@ -44,6 +44,7 @@
                     <input type="text" class="form-control" id="cp" name="cp">
                     <label for="newPassword">Mot de passe</label>
                     <input type="password" class="form-control" id="newPassword" name="newPassword">
+
                 </div>
             </form>
         </div>
