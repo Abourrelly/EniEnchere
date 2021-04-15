@@ -21,14 +21,16 @@ public class test {
 
 	static UserDAO userDao = DAOFactory.getUserDAO();	
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws UserDALException, Exception {
 		// TODO Auto-generated method stub
 		
 		UserManager userManager = new UserManager();
 		
+		System.out.println(userManager.connect("ss@s.c", "123456789"));
+		
 		//userManager.deleteUser(16);
 				
-		//userManager.updateUser(17, "gatoww", "saav", "gaetan", "g@gss.co", "0658454545", "9", "35000", "dinan", "azerty");
+		//userManager.updateUser(17, "Gatoww", "saav", "gaetan", "g@gss.co", "0658454545", "9", "35000", "dinan", "azerty");
 		
 		
 		//Utilisateur user = userManager.getInfosProfile(17);

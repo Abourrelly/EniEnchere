@@ -46,12 +46,14 @@ public class UserDaoJDBCImpl implements UserDAO {
 
 	private static final String UPDATE_USER = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 
+	private static final String UPDATE_USER_EMPTY_MDP = "UPDATE ENCHERE_GRP1.UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, rue = ?, code_postal = ?, ville = ? WHERE no_utilisateur = ?";
+	
 	private static final String DELETE_USER = "DELETE FROM ENCHERE_GRP1.UTILISATEURS WHERE no_utilisateur = ?";
 	
-	
 	@Override
-	public int connect(String input, String password, boolean choiceRequete) throws Exception {
+	public int connect(String input, String password, boolean choiceRequete) throws UserDALException, Exception {
 		// TODO Auto-generated method stub
+		int id = 0;
 		
 		String requete = null;
 		
@@ -66,45 +68,38 @@ public class UserDaoJDBCImpl implements UserDAO {
 		
 		}
 		
-		if(requete != null) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			
-			try(Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pStmtUser = cnx.prepareStatement(requete);
+			pStmtUser.setString(1, input);
+			
+			ResultSet rs = pStmtUser.executeQuery();
+			
+			if (rs.next()) {
 				
-				PreparedStatement pStmtUser = cnx.prepareStatement(requete);
-				pStmtUser.setString(1, input);
+				String passwordInDb = rs.getString("mot_de_passe");
+				String passwordEncrypt = encryptPassword(password);
 				
-				ResultSet rs = pStmtUser.executeQuery();
-				
-				if (rs.next()) {
-					// resultat pas vide
-					String passwordInDb = rs.getString("mot_de_passe");
+				if (passwordEncrypt.equals(passwordInDb)) {
 					
-					String passwordEncrypt = encryptPassword(password);
-			        
-			        if(passwordEncrypt.equals(passwordInDb)) {
-			        	// password correct
-			        	int id = rs.getInt("no_utilisateur");
-			        	return id;
-			        	
-			        } else {
-			        	// password incorrect
-			        	return 0;
-			        	
-			        }
+					id = rs.getInt("no_utilisateur");
+					
+					return id;
 					
 				} else {
-					// Aucun resultat / vide
-					return 0;
+					
+					return id;
 					
 				}
+			} else {
 				
-			} catch (SQLException e) {
-				e.printStackTrace();
+				return id;
+				
 			}
-			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new UserDALException("Nous ne trouvons personne avec c'est identifiant !");
 		}
-		
-		return 0;
 
 	}
 
@@ -154,7 +149,7 @@ public class UserDaoJDBCImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean checkUniquePseudoAndEmail(String pseudo, String email) {
+	public boolean checkUniquePseudoAndEmail(String pseudo, String email){
 		// TODO Auto-generated method stub
 		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
@@ -210,9 +205,21 @@ public class UserDaoJDBCImpl implements UserDAO {
 	@Override
 	public void updateUser(int id, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) throws Exception {
 		
+		String requete = null;
+		
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
-			PreparedStatement pStmtUser = cnx.prepareStatement(UPDATE_USER);
+			if(motDePasse != "") {
+				
+				requete = UPDATE_USER;
+				
+			} else {
+				
+				requete = UPDATE_USER_EMPTY_MDP;
+				
+			}
+			
+			PreparedStatement pStmtUser = cnx.prepareStatement(requete);
 			
 			pStmtUser.setString(1, pseudo);
 			pStmtUser.setString(2, nom);
@@ -223,11 +230,19 @@ public class UserDaoJDBCImpl implements UserDAO {
 			pStmtUser.setString(7, codePostal);
 			pStmtUser.setString(8, ville);
 			
-			String password = encryptPassword(motDePasse);
-			
-			pStmtUser.setString(9, password);
-			pStmtUser.setInt(10, id);
-			
+			if(motDePasse != "") {
+				
+				String password = encryptPassword(motDePasse);
+				
+				pStmtUser.setString(9, password);
+				pStmtUser.setInt(10, id);
+				
+			} else {
+				
+				pStmtUser.setInt(9, id);
+				
+			}
+
 			pStmtUser.executeUpdate();
 			
 		} catch (SQLException e) {

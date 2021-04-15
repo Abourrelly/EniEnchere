@@ -84,9 +84,9 @@ public class ArticleManager {
 	}
 	
 	
-	public List<ArticleVendu> getAllArticleUserConnect(int id) throws Exception {
+	public List<ArticleVendu> getAllArticleUserConnect() throws Exception { //int id
 		
-		listeArticleVendu.addAll(articleDao.getAllArticleUserConnect(id));
+		listeArticleVendu.addAll(articleDao.getAllArticleUserConnect()); //id
 		return listeArticleVendu;
 		
 	}

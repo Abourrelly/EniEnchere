@@ -110,7 +110,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check ml-3">
-                                        <label class="form-check-label"> 
+                                        <label class="form-check-label">
                                         <input class="form-check-input option2-checkbox" type="checkbox"
                                                 value="" checked=""> Ventes non débutées
                                         </label>

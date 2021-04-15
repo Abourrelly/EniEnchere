@@ -15,6 +15,10 @@
   <welcome-file-list>
   	<welcome-file>accueil</welcome-file>
   </welcome-file-list>
+  
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
 
   <error-page>
     <!-- Missing resource -->

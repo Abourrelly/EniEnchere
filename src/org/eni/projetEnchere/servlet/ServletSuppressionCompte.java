@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.eni.projetEnchere.bll.UserManager;
+import org.eni.projetEnchere.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletSuppressionCompte
  */
-@WebServlet("/ServletSuppressionCompte")
+@WebServlet("/suppresion")
 public class ServletSuppressionCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,16 +40,17 @@ public class ServletSuppressionCompte extends HttpServlet {
 			
 			// recuperation de la session
 			HttpSession session = request.getSession();
+
+			Utilisateur profil = (Utilisateur) session.getAttribute("utilisateur");
 			
-			String id = (String)session.getAttribute("no_utilisateur");
+			int id = profil.getId();
+				
 			
-			int id_int = Integer.parseInt(id);
-			
-			if(id_int != 0) {
+			if(id != 0) {
+				
+				userManager.deleteUser(id);
 			
 				request.getSession().invalidate();
-			
-				userManager.deleteUser(id_int);
 				
 			}
 			
