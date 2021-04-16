@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eni.projetEnchere.bll.ArticleManager;
+
 /**
  * Servlet implementation class ServletCreationCompte
  */
@@ -36,7 +38,27 @@ public class ServletCreationEnchere extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		ArticleManager articlemanager = new ArticleManager();
+		try {
+			articlemanager.saleArticle(
+					Integer.parseInt(request.getParameter("idUser")) , 
+					request.getParameter("nom"), 
+					request.getParameter("description"), 
+					request.getParameter("dateDebutEnchere"), 
+					request.getParameter("dateFinEnchere"), 
+					0, 
+					Integer.parseInt(request.getParameter("prix")), 
+					Integer.parseInt(request.getParameter("categorie")), 
+					request.getParameter("rue"),
+					request.getParameter("codePostale"), 
+					request.getParameter("ville"));
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil");
+			rd.forward(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

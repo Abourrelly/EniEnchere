@@ -147,9 +147,9 @@
                 <a href="ressource/article/<%=article.getIdArticle() %>.jpg"
                    class="lightbox imgArticle position-relative" aria-haspopup="dialog"
                    title="<%=article.getNom()%>">
-                    <img src="ressource/article/<%=article.getIdArticle() %>.jpg" class="img-card-shop card-img-top"
-                         alt="image">
-                    <%if (LocalDate.now().isBefore(LocalDate.parse(article.getDateDebutEncheres())) && LocalDate.now().plusDays(2).isAfter(LocalDate.parse(article.getDateDebutEncheres()))) {%>
+                    <img src="ressource/article/<%=article.getIdArticle() %>.jpg" data-numArticle="<%= article.getIdArticle() %>" class="img-card-shop card-img-top"
+                         alt="image" onerror="ReplaceImg(this)">
+                    <%if (LocalDate.now().minusDays(1).isBefore(LocalDate.parse(article.getDateDebutEncheres())) && LocalDate.now().plusDays(2).isAfter(LocalDate.parse(article.getDateDebutEncheres()))) {%>
                     <i class="iconImg newIcon text-dark flaticon-new-tag-hand-drawn-outline"></i>
                     <%}%>
                 </a>
@@ -167,8 +167,7 @@
                     </div>
                     <div class="post-meta">
 								<span class="lh-120"><i class="flaticon-favorite-user-hand-drawn-interface-symbol"></i>
-                                    Vendu par : <a
-                                            href="<%=request.getContextPath()%>/profil?id=<%=article.getUtilisateur().getId()%>"><%=article.getUtilisateur().getPseudo()%></a>
+                                    Vendu par : <a href="<%=request.getContextPath()%>/profil?id=<%=article.getUtilisateur().getId()%>"><%=article.getUtilisateur().getPseudo()%></a>
                                 </span>
                     </div>
                     <p class="small text-muted mt-2"><%= article.getDescription().length() > 150 ? article.getDescription().substring(0, 150) : article.getDescription() %><%=article.getDescription().length() > 150 ? "..." : ""%>
@@ -176,9 +175,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="col pl-0">
                             <span class="text-muted font-small d-block mb-2">Montant</span>
-                            <span class="small text-dark"><%=article != null ? article.getPrixVente() : ""%>
-                                        <i class="flaticon-coins-stacks-of-dollars-hand-drawn-commercial-symbol"></i>
-                                    </span>
+                            <span class="small text-dark"><%=article != null ? article.getPrixVente() : ""%> <i class="flaticon-coins-stacks-of-dollars-hand-drawn-commercial-symbol"></i> </span>
                         </div>
                         <div class="col">
                             <span class="text-muted font-small d-block mb-2">Début</span>
@@ -197,7 +194,7 @@
     </div>
 
 </div>
-<script src="ressource/JS/accueil.js?v=202104091628"></script>
+<script src="ressource/JS/accueil.js?v=202104161306"></script>
 <script type="text/javascript">
     $(function () {
         $('.lightbox').topbox();

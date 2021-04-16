@@ -1,5 +1,6 @@
 $( document ).ready(function() {
     swapCheckbox($("#optionsRadios1"))
+    
 });
 
 function swapCheckbox(input) {
@@ -14,4 +15,9 @@ function swapCheckbox(input) {
         $(this).prop('checked', false)
         $(this).attr('disabled', false)
     });
+}
+
+
+function ReplaceImg(lui){
+	$(lui).attr('src', 'ressource/img/no-image.png');
 }
