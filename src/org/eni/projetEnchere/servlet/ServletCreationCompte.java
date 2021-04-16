@@ -53,32 +53,40 @@ public class ServletCreationCompte extends HttpServlet {
 		String confirmPass = request.getParameter("confirmPass");
 		
 		UserManager userManager = new UserManager();
-		
-		try {
-						
-			//Utilisateur user = 
-			userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, 0);
-		
-			// recuperation de la session
-			HttpSession session = request.getSession();
+		/*if(pseudo.isEmpty() || nom.isEmpty() || prenom.isEmpty() ||
+                email.isEmpty() || telephone.isEmpty() || rue.isEmpty() || codePostal.isEmpty() || ville.isEmpty() || motDePasse.isEmpty() || confirmPass.isEmpty())
+        {
+            doGet(request, response);
+	    }
+	    else
+	    {*/
+			try {
+							
+				//Utilisateur user = 
+				userManager.subscribe(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, 0);
 			
-			int connect = 0;
-			
-			if(session.getAttribute("connect") == null) {
+				// recuperation de la session
+				HttpSession session = request.getSession();
 				
-				connect = 1;
+				int connect = 0;
 				
-				session.setAttribute("connect", connect);
+				if(session.getAttribute("connect") == null) {
+					
+					connect = 1;
+					
+					session.setAttribute("connect", connect);
+				
+				}
+
+				RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+		        rd.forward(request, response);
 			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
-	        rd.forward(request, response);
-		
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		/* } */
 		
 	}
 
