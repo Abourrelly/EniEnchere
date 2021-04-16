@@ -33,29 +33,29 @@
 	        <div class="col-sm-6">
 	            <div class="form-group">
 	                <label for="pseudo">Pseudo</label>
-	                <input type="text" class="form-control" id="pseudo" name="pseudo">
+	                <input type="text" class="form-control" id="pseudo" name="pseudo" required>
 	                <label for="prenom">Prénom</label>
-	                <input type="text" class="form-control" id="prenom" name="prenom">
+	                <input type="text" class="form-control" id="prenom" name="prenom" required>
 	                <label for="telephone">Téléphone</label>
-	                <input type="text" class="form-control" id="telephone" name="telephone">
+	                <input type="text" class="form-control" id="telephone" name="telephone" required>
 	                <label for="cp">Code postal</label>
-	                <input type="text" class="form-control" id="cp" name="cp">	                
-	                <label for="new_password">Nouveau mot de passe</label>
-	                <input type="password" class="form-control" id="newPassword" name="newPassword">
+	                <input type="text" class="form-control" id="cp" name="cp" required>	                
+	                <label for="newPassword">Nouveau mot de passe</label>
+	                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
 	            </div>
 	        </div>
 	        <div class="col-sm-6">
 	             <div class="form-group">
 	                 <label for="nom">Nom</label>
-	                 <input type="text" class="form-control" id="nom" name="nom">
+	                 <input type="text" class="form-control" id="nom" name="nom" required>
 	                 <label for="exampleInputEmail1">Email</label>
-	                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+	                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
 	                 <label for="rue">Rue</label>
-	                 <input type="text" class="form-control" id="rue" name="rue">
+	                 <input type="text" class="form-control" id="rue" name="rue" required>
 	                 <label for="ville">Ville</label>
-	                 <input type="text" class="form-control" id="ville" name="ville">
+	                 <input type="text" class="form-control" id="ville" name="ville" required>
 	                 <label for="confirmPass">Confirmation</label>
-	                 <input type="password" class="form-control" id="confirmPass" aria-describedby="emailHelp" name="confirmPass">
+	                 <input type="password" class="form-control" id="confirmPass" aria-describedby="emailHelp" name="confirmPass" required>
 	             </div>
 	        </div>
 	        

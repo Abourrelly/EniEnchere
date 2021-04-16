@@ -53,13 +53,7 @@ public class ServletCreationCompte extends HttpServlet {
 		String confirmPass = request.getParameter("confirmPass");
 		
 		UserManager userManager = new UserManager();
-		/*if(pseudo.isEmpty() || nom.isEmpty() || prenom.isEmpty() ||
-                email.isEmpty() || telephone.isEmpty() || rue.isEmpty() || codePostal.isEmpty() || ville.isEmpty() || motDePasse.isEmpty() || confirmPass.isEmpty())
-        {
-            doGet(request, response);
-	    }
-	    else
-	    {*/
+		
 			try {
 							
 				//Utilisateur user = 
@@ -78,15 +72,13 @@ public class ServletCreationCompte extends HttpServlet {
 				
 				}
 
-				RequestDispatcher rd = request.getRequestDispatcher("/accueil.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/accueil");
 		        rd.forward(request, response);
 			
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-		/* } */
 		
 	}
 
