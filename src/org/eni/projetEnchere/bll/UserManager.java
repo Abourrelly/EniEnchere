@@ -44,7 +44,7 @@ public class UserManager {
 			if(v == true) {
 				
 				// si le pseudo n'est pas null et que c'est caractere soit tous alphanumerique
-				if(pseudo != null && pseudo.matches("\\p{Alpha}+")){ // "\\p{Alpha}+"  // "\\p{Alnum}"
+				if(pseudo != null){ // "\\p{Alpha}+"  // "\\p{Alnum}"
 					
 					Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, 0);
 					userDao.subscribe(user);
