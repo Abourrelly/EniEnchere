@@ -2,3 +2,14 @@
     max-height: 70%;
     max-width: 70%;
 }
+
+.retrait{
+    border:2px solid black;
+}
+
+.retraitTitle{
+    width:fit-content;
+    margin-top:-10px;
+    margin-left:5px;
+    background:white;
+}
