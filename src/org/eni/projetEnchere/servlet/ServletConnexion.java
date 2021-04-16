@@ -58,7 +58,7 @@ public class ServletConnexion extends HttpServlet {
 
 				int connect = 0;
 
-				if(session.getAttribute("connect") == null) {
+				if(session.getAttribute("connect") == null || session.getAttribute("utilisateur") == null) {
 					connect = 1;
 					session.setAttribute("connect", connect);
 					session.setAttribute("utilisateur", userManager.getInfosProfile(id));
