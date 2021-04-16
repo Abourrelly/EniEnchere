@@ -170,7 +170,7 @@
                                             href="<%=request.getContextPath()%>/profil?id=<%=article.getUtilisateur().getId()%>"><%=article.getUtilisateur().getPseudo()%></a>
                                 </span>
                         </div>
-                        <p class="small text-muted mt-2"><%=article.getDescription().substring(0, 150)%><%=article.getDescription().length() > 150 ? "..." : ""%>
+                        <p class="small text-muted mt-2"><%= article.getDescription().length() >150 ? article.getDescription().substring(0, 150) : article.getDescription() %><%=article.getDescription().length() > 150 ? "..." : ""%>
                         </p>
                         <div class="d-flex justify-content-between">
                             <div class="col pl-0">
