@@ -31,8 +31,8 @@ body {
 }
 
 .bg-c-lite-green {
-background: rgb(58,100,180);
-background: linear-gradient(90deg, rgba(58,100,180,1) 0%, rgba(170,29,253,1) 50%, rgba(252,176,69,1) 100%);
+background: rgb(34,195,54);
+background: linear-gradient(150deg, rgba(34,195,54,1) 0%, rgba(45,177,253,1) 100%);
 }
 
 .user-profile {
