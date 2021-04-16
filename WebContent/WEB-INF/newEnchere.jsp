@@ -20,7 +20,7 @@
 	List<Categorie> listCategories = new CategorieManager().getAll();
 %>
 <jsp:include page="/navbar.jsp"/>
-<form>
+<form method="post" action="<%= request.getContextPath() %>/creationEnchere">
 <div class="container mb-2">
     <div class="row d-flex flex-wrap align-items-center">
         <div class="col-lg-12 col-md-12 col-sm-12 mt-5">
@@ -31,10 +31,12 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 mt-5">
                 <div class="form-group">
+                	<!-- idUser -->
+                	<input type="hidden" name="idUser" value="<%= user != null ? user.getId() : 0%>">
                     <!-- Article -->
                     <div class="form-group">
                         <label for="article">Article</label> 
-                        <input type="text" class="form-control" name="article" id="article" required="required">
+                        <input type="text" class="form-control" name="nom" id="article" required="required">
                     </div>
                     <!-- Description -->
                     <div class="form-group">
@@ -63,12 +65,12 @@
                     <!-- Début de l'enchère -->
                     <div class="form-group">
                         <label for="dateDebut">Début de l'enchère</label> 
-                        <input class="form-control" type="datetime-local" name="dateDebut" id="dateDebut" required="required"/>
+                        <input class="form-control" type="date" name="dateDebutEnchere" id="dateDebutEnchere" required="required"/>
                     </div>
                     <!-- Fin de l'enchère -->
                     <div class="form-group">
                         <label for="dateFin">Fin de l'enchère</label> 
-                        <input class="form-control" type="datetime-local" name="dateFin" id="dateFin" required="required"/>
+                        <input class="form-control" type="date" name="dateFinEnchere" id="dateFinEnchere" required="required"/>
                     </div>
 
                     <div class="retrait">

@@ -32,7 +32,7 @@ public class ArticleManager {
 		articleDao = DAOFactory.getArticleDAO();
 	}
 	
-	public ArticleVendu saleArtilce(int id, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, int idCategorie, String rue, String codePostal, String ville) throws Exception {
+	public ArticleVendu saleArticle(int id, String nom, String description, String dateDebutEncheres, String dateFinEncheres, int prixInitial, int prixVente, int idCategorie, String rue, String codePostal, String ville) throws Exception {
 		
 //		En tant qu’utilisateur, 
 //		je peux vendre un article sur la plateforme ENI-Enchères. 
