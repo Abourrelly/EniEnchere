@@ -32,17 +32,13 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 
 	private static final String INSERT_RETRAIT = "INSERT INTO ENCHERE_GRP1.RETRAITS(no_article, rue, code_postal, ville) VALUES(?, ?, ?, ?)";
 
-	
 
 	private static final String SELECT_ALL_ARTICLE_USER_DISCONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS";
 
-	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";                            
-
-
-	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDU"; // WHERE no_utilisateur = ?
+	private static final String SELECT_ALL_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS"; // WHERE no_utilisateur = ?
 	// _USER_CONNECT
-	
-	
+
+
 //	private static final String SELECT_ALL_ARTICLE_USER_CONNECT = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ENCHERE_GRP1.ARTICLES_VENDUS INNER JOIN ENCHERE_GRP1.ENCHERES ON ENCHERE_GRP1.ARTICLES_VENDUS.no_article = ENCHERE_GRP1.ENCHERES.no_article AND ENCHERE_GRP1.ARTICLES_VENDUS.no_utilisateur = ENCHERE_GRP1.ENCHERES.no_utilisateur WHERE no_utilisateur = ?";                            
 
 	
@@ -70,7 +66,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	private static final String SELECT_RETRAIT_BY_ID_ARTICLE = "SELECT no_article, rue, code_postal, ville FROM ENCHERE_GRP1.RETRAITS WHERE no_article = ?";
 	
 	private static final String SELECT_ARTICLE_BY_ID_USER = "SELECT no_article, no_utilisateur FROM ENCHERE_GRP1.ARTICLES_VENDUS WHERE no_utilisateur = ?";
-	
+
 	@Override
 	public ArticleVendu saleArticle(Utilisateur user, ArticleVendu article, Retrait retrait, int idCategorie) throws Exception {
 		// TODO Auto-generated method stub
@@ -169,7 +165,7 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		// TODO Auto-generated method stub
 		List<ArticleVendu> result = new  ArrayList<>();
 		try(Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_ARTICLE_USER_DISCONNECT);
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_ARTICLE);
 //			pStmt.setDate(1, java.sql.Date.valueOf(nowFormatString));
 //			pStmt.setDate(2, java.sql.Date.valueOf(nowFormatString));
 			ResultSet rs = pStmt.executeQuery();
@@ -402,30 +398,30 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 	public ArticleVendu selectByIdUser(int id) throws Exception {
 		// TODO Auto-generated method stub
 		ArticleVendu articleVendu = null;
-		
+
 		try(Connection cnx = ConnectionProvider.getConnection()) {
-		
+
 			PreparedStatement pStmtArticle = cnx.prepareStatement(SELECT_ARTICLE_BY_ID_USER, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			pStmtArticle.setInt(1, id);
-			
+
 			ResultSet rsArticle = pStmtArticle.executeQuery();
-			
+
 			if(rsArticle.next()){
-				
+
 				articleVendu = new ArticleVendu();
 				articleVendu.setIdArticle(rsArticle.getInt("no_article"));
-			
+
 			}
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		System.out.println(articleVendu);
-		
+
 		return articleVendu;
 	}
-	
+
 	private String nowDate() {
 		
 		Date now = new Date();
@@ -449,13 +445,13 @@ public class ArticleDaoJDBCImpl implements ArticleDAO {
 		int prixInitial = rs.getInt("prix_initial");
 		int prixVente = rs.getInt("prix_vente");
 		Utilisateur utilisateur = null;
-		
+
 		try {
 			 utilisateur = new UserManager().getInfosProfile(rs.getInt("no_utilisateur"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Categorie categorie = null;
 		try {
 			 categorie = new CategorieManager().getById(rs.getInt("no_categorie"));

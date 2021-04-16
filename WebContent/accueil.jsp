@@ -30,7 +30,6 @@
     <link href="ressource/css/accueil.css" rel="stylesheet">
 </head>
 <body>
-
 <jsp:include page="/navbar.jsp"/>
 <img id="greenCut" src="ressource/img/greenCut.png"/>
 <img id="treeCut" src="ressource/img/tree.png"/>
@@ -111,7 +110,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check ml-3">
-                                        <label class="form-check-label"> 
+                                        <label class="form-check-label">
                                         <input class="form-check-input option2-checkbox" type="checkbox"
                                                 value="" checked=""> Ventes non débutées
                                         </label>
@@ -171,7 +170,7 @@
                                             href="<%=request.getContextPath()%>/profil?id=<%=article.getUtilisateur().getId()%>"><%=article.getUtilisateur().getPseudo()%></a>
                                 </span>
                         </div>
-                        <p class="small text-muted mt-2"><%=article.getDescription().substring(0, 150)%><%=article.getDescription().length() > 150 ? "..." : ""%>
+                        <p class="small text-muted mt-2"><%= article.getDescription().length() >150 ? article.getDescription().substring(0, 150) : article.getDescription() %><%=article.getDescription().length() > 150 ? "..." : ""%>
                         </p>
                         <div class="d-flex justify-content-between">
                             <div class="col pl-0">
