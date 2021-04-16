@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Eni-Enchères - Création de compte</title>
+    <title>Eni-Enchères - Modifier le compte</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
@@ -27,7 +27,7 @@
 
 	<div class="">
         <div class="col-sm-12 mt-5">
-            <h2 class="text-center">Modifier mon profile</h2>
+            <h2 class="text-center">Modifier mon profil</h2>
         </div>
         <form action="<%=request.getContextPath() %>/modifierCompte" class="d-flex justify-content-center flex-wrap w-75 m-auto" method="POST">
 	        <div class="col-sm-6">
@@ -71,7 +71,7 @@
 	        
 	        	<div class="notification"><p></p></div>
 	        
-	        	<input type="submit" class="btn btn-primary" value="EN?VOYER" />
+	        	<input type="submit" class="btn btn-primary" value="ENVOYER" />
 	        	
 	        	<a href="<%=request.getContextPath() %>/suppresion" class="btn btn-primary" >SUPPRIMER MON COMPTE</a>
 	        	
