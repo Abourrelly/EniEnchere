@@ -16,14 +16,11 @@
     <meta name="author" content="">
     <title>Eni-Enchères - Modifier le compte</title>
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="ressource/Icon/font/flaticon.css">
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	    <a class="navbar-brand" href="<%=request.getContextPath() %>/accueil">Eni-Enchères</a>
-	</nav>
+<jsp:include page="/navbar.jsp"/>
 
 	<div class="">
         <div class="col-sm-12 mt-5">
